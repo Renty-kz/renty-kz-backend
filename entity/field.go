@@ -7,7 +7,7 @@ type Organization struct {
 }
 
 type Field struct {
-	Name string `json:"name" validate:"is-cool"`
+	Name string `json:"name"`
 	Address string `json:"address"`
 	City string `json:"city"`
 	Contacts string `json:"contacts"`

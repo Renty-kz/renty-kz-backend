@@ -8,12 +8,18 @@ import (
 	"github.com/KadirbekSharau/rentykz-backend/controller"
 	"github.com/KadirbekSharau/rentykz-backend/middlewares"
 	"github.com/KadirbekSharau/rentykz-backend/service"
+	"github.com/KadirbekSharau/rentykz-backend/service/auth/jwt_service"
+	"github.com/KadirbekSharau/rentykz-backend/service/auth/login"
 	"github.com/gin-gonic/gin"
 )
 
 var (
 	fieldService service.FieldService = service.New()
+	loginService login.LoginService = login.NewLoginService()
+	jwtService   jwt_service.JWTService   = jwt_service.NewJWTService()
+
 	fieldController controller.FieldController = controller.New(fieldService)
+	loginController controller.LoginController = controller.NewLoginController(loginService, jwtService)
 )
 
 func setupLogOutput() {
@@ -36,7 +42,18 @@ func main() {
 
 	server.LoadHTMLGlob("templates/*.html")
 
-	apiRoutes := server.Group("/api")
+	server.POST("/login", func(ctx *gin.Context) {
+		token := loginController.Login(ctx)
+		if token != "" {
+			ctx.JSON(http.StatusOK, gin.H{
+				"token": token,
+			})
+		} else {
+			ctx.JSON(http.StatusUnauthorized, nil)
+		}
+	})
+
+	apiRoutes := server.Group("/api", middlewares.AuthorizeJWT())
 	{
 		apiRoutes.GET("/fields", func(ctx *gin.Context) {
 			ctx.JSON(200, fieldController.FindAll())

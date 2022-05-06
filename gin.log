@@ -5,16 +5,18 @@
 [GIN-debug] GET    /css/*filepath            --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
 [GIN-debug] HEAD   /css/*filepath            --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
 [GIN-debug] Loaded HTML Templates (4): 
-	- index.html
 	- 
 	- footer.html
 	- header.html
+	- index.html
 
-[GIN-debug] GET    /api/fields               --> main.main.func1 (4 handlers)
-[GIN-debug] POST   /api/fields               --> main.main.func2 (4 handlers)
+[GIN-debug] POST   /login                    --> main.main.func1 (4 handlers)
+[GIN-debug] GET    /api/fields               --> main.main.func2 (5 handlers)
+[GIN-debug] POST   /api/fields               --> main.main.func3 (5 handlers)
 [GIN-debug] GET    /view/videos              --> github.com/KadirbekSharau/rentykz-backend/controller.FieldController.ShowAll-fm (4 handlers)
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8080
-::1 - [06 May 22 21:03 +05] GET /view/videos 200 2.062709ms
-::1 - [06 May 22 21:03 +05] GET /view/videos 200 1.332042ms
+::1 - [06 May 22 23:10 +05] GET /login 404 11.958µs
+::1 - [06 May 22 23:10 +05] POST /login 401 1.816167ms
+::1 - [06 May 22 23:29 +05] POST /login 200 11.28575ms
