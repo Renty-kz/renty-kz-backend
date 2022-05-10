@@ -2,24 +2,20 @@ package main
 
 import (
 	"io"
-	"net/http"
 	"os"
+	"time"
 
-	"github.com/KadirbekSharau/rentykz-backend/controller"
+	getFieldController "github.com/KadirbekSharau/rentykz-backend/controller/field-controllers/get-field"
 	"github.com/KadirbekSharau/rentykz-backend/middlewares"
-	"github.com/KadirbekSharau/rentykz-backend/service"
-	"github.com/KadirbekSharau/rentykz-backend/service/auth/jwt_service"
-	"github.com/KadirbekSharau/rentykz-backend/service/auth/login"
+	"github.com/KadirbekSharau/rentykz-backend/routes"
+	getFieldService "github.com/KadirbekSharau/rentykz-backend/service/field/get-field"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	fieldService service.FieldService = service.New()
-	loginService login.LoginService = login.NewLoginService()
-	jwtService   jwt_service.JWTService   = jwt_service.NewJWTService()
-
-	fieldController controller.FieldController = controller.New(fieldService)
-	loginController controller.LoginController = controller.NewLoginController(loginService, jwtService)
+	fieldService getFieldService.FieldService   	   = getFieldService.New()
+	fieldController getFieldController.FieldController = getFieldController.New(fieldService)
 )
 
 func setupLogOutput() {
@@ -33,47 +29,29 @@ func main() {
 	server := gin.New()
 
 	server.Use(
-		gin.Recovery(), 
-		middlewares.Logger(), 
-		middlewares.BasicAuth(),
+		gin.Recovery(),
+		middlewares.Logger(),
+		cors.New(cors.Config{
+			AllowAllOrigins:  true,
+			AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+			AllowHeaders:     []string{"*"},
+			ExposeHeaders:    []string{"Content-Length", "text/plain", "Authorization", "Content-Type"},
+			AllowCredentials: true,
+			MaxAge:           12 * time.Hour,
+		}),
+		//middlewares.BasicAuth(),
 	)
 
 	server.Static("/css", "./templates/css")
 
 	server.LoadHTMLGlob("templates/*.html")
-
-	server.POST("/login", func(ctx *gin.Context) {
-		token := loginController.Login(ctx)
-		if token != "" {
-			ctx.JSON(http.StatusOK, gin.H{
-				"token": token,
-			})
-		} else {
-			ctx.JSON(http.StatusUnauthorized, nil)
-		}
-	})
-
-	apiRoutes := server.Group("/api", middlewares.AuthorizeJWT())
-	{
-		apiRoutes.GET("/fields", func(ctx *gin.Context) {
-			ctx.JSON(200, fieldController.FindAll())
-		})
-	
-		apiRoutes.POST("/fields", func(ctx *gin.Context) {
-			err := fieldController.Save(ctx)
-			if err != nil {
-				ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			} else {
-				ctx.JSON(http.StatusOK, gin.H{"message" : "Field input found"})
-			}
-		})
-	}
+	routes.InitAuthRoutes(server)
+	routes.InitFieldRoutes(server)
 
 	viewRoutes := server.Group("/view")
 	{
 		viewRoutes.GET("/videos", fieldController.ShowAll)
 	}
-
 
 	server.Run(":8080")
 }
