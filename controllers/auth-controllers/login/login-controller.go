@@ -1,38 +1,29 @@
 package loginAuthController
 
 import (
-	"github.com/KadirbekSharau/rentykz-backend/dto"
-	"github.com/KadirbekSharau/rentykz-backend/service/auth/jwt_service"
-	"github.com/KadirbekSharau/rentykz-backend/service/auth/login"
-	"github.com/gin-gonic/gin"
+	model "github.com/KadirbekSharau/rentykz-backend/models"
 )
 
-type LoginController interface {
-	Login(ctx *gin.Context) string
+type Service interface {
+	LoginService(input *InputLogin) (*model.EntityUsers, string)
 }
 
-type loginController struct {
-	loginService loginAuthService.LoginService
-	jWtService   jwt_service.JWTService
+type service struct {
+	repository Repository
 }
 
-func NewLoginController(loginService loginAuthService.LoginService,
-	jWtService jwt_service.JWTService) LoginController {
-	return &loginController{
-		loginService: loginService,
-		jWtService:   jWtService,
-	}
+func NewServiceLogin(repository Repository) *service {
+	return &service{repository: repository}
 }
 
-func (controller *loginController) Login(ctx *gin.Context) string {
-	var credentials dto.Credentials
-	err := ctx.ShouldBind(&credentials)
-	if err != nil {
-		return ""
+func (s *service) LoginService(input *InputLogin) (*model.EntityUsers, string) {
+
+	user := model.EntityUsers{
+		Email:    input.Email,
+		Password: input.Password,
 	}
-	isAuthenticated := controller.loginService.Login(credentials.Username, credentials.Password)
-	if isAuthenticated {
-		return controller.jWtService.GenerateToken(credentials.Username, true)
-	}
-	return ""
+
+	resultLogin, errLogin := s.repository.LoginRepository(&user)
+
+	return resultLogin, errLogin
 }

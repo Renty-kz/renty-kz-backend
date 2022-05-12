@@ -1,32 +1,20 @@
 package routes
 
 import (
-	"net/http"
-
-	loginAuthController "github.com/KadirbekSharau/rentykz-backend/controller/auth-controllers/login"
-	"github.com/KadirbekSharau/rentykz-backend/service/auth/jwt_service"
-	loginAuthService "github.com/KadirbekSharau/rentykz-backend/service/auth/login"
+	loginAuthController "github.com/KadirbekSharau/rentykz-backend/controllers/auth-controllers/login"
+	LoginHandler "github.com/KadirbekSharau/rentykz-backend/handlers/auth/login"
 	"github.com/gin-gonic/gin"
-	//"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 /* @description All Auth routes */
-func InitAuthRoutes(route *gin.Engine) {
+func InitAuthRoutes(db *gorm.DB, route *gin.Engine) {
 	var (
-		loginService loginAuthService.LoginService = loginAuthService.NewLoginService()
-		jwtService   jwt_service.JWTService		   = jwt_service.NewJWTService()
-		loginController loginAuthController.LoginController = loginAuthController.NewLoginController(loginService, jwtService)
+		LoginRepository loginAuthController.Repository = loginAuthController.NewRepositoryLogin(db)
+		loginService loginAuthController.Service = loginAuthController.NewServiceLogin(LoginRepository)
+		loginHandler LoginHandler.LoginHandler = LoginHandler.NewLoginHandler(loginService)
 	)
 
 	groupRoute := route.Group("/api/v1")
-	groupRoute.POST("/login", func(ctx *gin.Context) {
-		token := loginController.Login(ctx)
-		if token != "" {
-			ctx.JSON(http.StatusOK, gin.H{
-				"token": token,
-			})
-		} else {
-			ctx.JSON(http.StatusUnauthorized, nil)
-		}
-	})
+	groupRoute.POST("/login", loginHandler.LoginHandler)
 }

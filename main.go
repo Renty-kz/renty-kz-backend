@@ -5,10 +5,10 @@ import (
 	"os"
 	"time"
 
-	getFieldController "github.com/KadirbekSharau/rentykz-backend/controller/field-controllers/get-field"
-	"github.com/KadirbekSharau/rentykz-backend/middlewares"
+	"github.com/KadirbekSharau/rentykz-backend/configs/db"
+	getFieldController "github.com/KadirbekSharau/rentykz-backend/controllers/field-controllers/get-field"
+	getFieldService "github.com/KadirbekSharau/rentykz-backend/handlers/field/get-field"
 	"github.com/KadirbekSharau/rentykz-backend/routes"
-	getFieldService "github.com/KadirbekSharau/rentykz-backend/service/field/get-field"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -25,12 +25,12 @@ func setupLogOutput() {
 
 func main() {
 	setupLogOutput()
-
+	db := db.NewDatabaseConnection()
 	server := gin.New()
 
 	server.Use(
 		gin.Recovery(),
-		middlewares.Logger(),
+		gin.Logger(),
 		cors.New(cors.Config{
 			AllowAllOrigins:  true,
 			AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -43,10 +43,9 @@ func main() {
 	)
 
 	server.Static("/css", "./templates/css")
-
 	server.LoadHTMLGlob("templates/*.html")
-	routes.InitAuthRoutes(server)
-	routes.InitFieldRoutes(server)
+	routes.InitAuthRoutes(db, server)
+	routes.InitFieldRoutes(db, server)
 
 	viewRoutes := server.Group("/view")
 	{

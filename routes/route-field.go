@@ -1,32 +1,20 @@
 package routes
 
 import (
-	"net/http"
-
-	getFieldController "github.com/KadirbekSharau/rentykz-backend/controller/field-controllers/get-field"
-	getFieldService "github.com/KadirbekSharau/rentykz-backend/service/field/get-field"
+	getFieldsController "github.com/KadirbekSharau/rentykz-backend/controllers/field-controllers/get-fields"
+	getFieldsHandler "github.com/KadirbekSharau/rentykz-backend/handlers/field/get-fields"
 	"github.com/gin-gonic/gin"
-	//"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 /* @description All field routes */
-func InitFieldRoutes(route *gin.Engine) {
+func InitFieldRoutes(db *gorm.DB, route *gin.Engine) {
 	var (
-		fieldService getFieldService.FieldService   	   = getFieldService.New()	
-		fieldController getFieldController.FieldController = getFieldController.New(fieldService)
+		getFieldsRepository getFieldsController.Repository = getFieldsController.NewGetFieldsRepository(db)
+		getFieldsService getFieldsController.Service = getFieldsController.NewGetFieldsService(getFieldsRepository)
+		handler getFieldsHandler.GetFieldsHandler = getFieldsHandler.NewGetFieldsHandler(getFieldsService)
 	)
 
 	groupRoute := route.Group("/api/v1")
-	groupRoute.GET("/fields", func(ctx *gin.Context) {
-		ctx.JSON(200, fieldController.FindAll())
-	})
-
-	groupRoute.POST("/fields", func(ctx *gin.Context) {
-		err := fieldController.Save(ctx)
-		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		} else {
-			ctx.JSON(http.StatusOK, gin.H{"message": "Field input found"})
-		}
-	})
+	groupRoute.GET("/field", handler.GetFieldsHandler)
 }

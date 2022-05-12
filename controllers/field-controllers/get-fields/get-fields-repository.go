@@ -2,18 +2,35 @@ package getFieldsController
 
 import (
 	"github.com/KadirbekSharau/rentykz-backend/models"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type Repository interface {
-	GetFieldRepository(model *models.Field) (*[]models.Field)
+	GetFieldsRepository() (*[]models.Field, string)
 }
 
-type database struct {
+type repository struct {
 	db *gorm.DB
 }
 
-func NewGetFieldRepository(db *gorm.DB) *database {
-	return &database{db: db}
+func NewGetFieldsRepository(db *gorm.DB) *repository {
+	return &repository{db: db}
+}
+
+func (r *repository) GetFieldsRepository() (*[]models.Field, string) {
+	var fields []models.Field
+	db := r.db.Model(&fields)
+	errorCode := make(chan string, 1)
+
+	resultFields := db.Debug().Select("*").Find(&fields)
+
+	if resultFields.Error != nil {
+		errorCode <- "RESULTS_STUDENT_NOT_FOUND_404"
+		return &fields, <-errorCode
+	} else {
+		errorCode <- "nil"
+	}
+
+	return &fields, <-errorCode
 }
 

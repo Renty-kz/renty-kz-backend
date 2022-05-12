@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/KadirbekSharau/rentykz-backend/models"
-	"github.com/KadirbekSharau/rentykz-backend/service/field/get-field"
-	"github.com/KadirbekSharau/rentykz-backend/validators"
+	"github.com/KadirbekSharau/rentykz-backend/handlers/field/get-field"
+	"github.com/KadirbekSharau/rentykz-backend/util"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 )
@@ -24,7 +24,7 @@ var validate *validator.Validate
 
 func New(service getFieldService.FieldService) FieldController {
 	validate = validator.New()
-	validate.RegisterValidation("is-cool", validators.ValidateTitle)
+	validate.RegisterValidation("is-cool", util.ValidateTitle)
 	return &fieldController{
 		service: service,
 	}
