@@ -3,23 +3,23 @@ package getFieldService
 import "github.com/KadirbekSharau/rentykz-backend/models"
 
 type FieldService interface {
-	Save(models.Field) models.Field
-	FindAll() []models.Field
+	Save(models.EntityFields) models.EntityFields
+	FindAll() []models.EntityFields
 }
 
 type fieldService struct {
-	fields []models.Field
+	fields []models.EntityFields
 }
 
 func New() FieldService {
 	return &fieldService{}
 }
 
-func (service *fieldService) Save(field models.Field) models.Field {
+func (service *fieldService) Save(field models.EntityFields) models.EntityFields {
 	service.fields = append(service.fields, field)
 	return field
 } 
  
-func (service *fieldService) FindAll() []models.Field {
+func (service *fieldService) FindAll() []models.EntityFields {
 	return service.fields
 }

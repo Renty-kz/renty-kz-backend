@@ -3,7 +3,7 @@ package getFieldsController
 import "github.com/KadirbekSharau/rentykz-backend/models"
 
 type Service interface {
-	GetFieldsService() (*[]models.Field, string)
+	GetFieldsService() (*[]models.EntityFields, string)
 }
 
 type service struct {
@@ -14,7 +14,7 @@ func NewGetFieldsService(repository Repository) *service {
 	return &service{repository: repository}
 }
 
-func (s *service) GetFieldsService() (*[]models.Field, string) {
+func (s *service) GetFieldsService() (*[]models.EntityFields, string) {
 
 	resultFields, errFields := s.repository.GetFieldsRepository()
 

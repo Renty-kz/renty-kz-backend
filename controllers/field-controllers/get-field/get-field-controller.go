@@ -11,7 +11,7 @@ import (
 )
 
 type FieldController interface {
-	FindAll() []models.Field
+	FindAll() []models.EntityFields
 	Save(ctx *gin.Context) error
 	ShowAll(ctx *gin.Context)
 }
@@ -30,12 +30,12 @@ func New(service getFieldService.FieldService) FieldController {
 	}
 }
 
-func (c *fieldController) FindAll() []models.Field {
+func (c *fieldController) FindAll() []models.EntityFields {
 	return c.service.FindAll()
 }
 
 func (c *fieldController) Save(ctx *gin.Context) error {
-	var field models.Field
+	var field models.EntityFields
 	err := ctx.ShouldBindJSON(&field)
 	if err != nil {
 		return err

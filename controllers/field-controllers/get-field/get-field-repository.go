@@ -6,7 +6,7 @@ import (
 )
 
 type Repository interface {
-	GetFieldRepository(model *models.Field) (*models.Field)
+	GetFieldRepository(model *models.EntityFields) (*models.EntityFields)
 }
 
 type database struct {

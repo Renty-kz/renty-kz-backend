@@ -6,7 +6,7 @@ import (
 )
 
 type Repository interface {
-	GetFieldsRepository() (*[]models.Field, string)
+	GetFieldsRepository() (*[]models.EntityFields, string)
 }
 
 type repository struct {
@@ -17,8 +17,8 @@ func NewGetFieldsRepository(db *gorm.DB) *repository {
 	return &repository{db: db}
 }
 
-func (r *repository) GetFieldsRepository() (*[]models.Field, string) {
-	var fields []models.Field
+func (r *repository) GetFieldsRepository() (*[]models.EntityFields, string) {
+	var fields []models.EntityFields
 	db := r.db.Model(&fields)
 	errorCode := make(chan string, 1)
 

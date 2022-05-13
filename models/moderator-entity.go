@@ -1,13 +1,13 @@
 package models
 
-import "time"
+import "gorm.io/gorm"
 
-type EntityUsers struct {
-	ID string `gorm:"primaryKey;"`
+type EntityModerators struct {
+	gorm.Model
 	Fullname string `gorm:"type:varchar(255)"`
 	Email string `gorm:"type:varchar(255);unique;not null"`
 	Password  string `gorm:"type:varchar(255);not null"`
-	Active    bool   `gorm:"type:bool;default:false"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	Fields []EntityFields `gorm:"foreignKey:ModeratorID"`
+	UserID int
+	OrganizationID int
 }
