@@ -8,6 +8,6 @@ type EntityModerators struct {
 	Email string `gorm:"type:varchar(255);unique;not null"`
 	Password  string `gorm:"type:varchar(255);not null"`
 	Fields []EntityFields `gorm:"foreignKey:ModeratorID"`
-	UserID int
-	OrganizationID int
+	UserID uint
+	OrganizationID uint
 }

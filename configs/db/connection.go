@@ -4,6 +4,8 @@ import (
 	"log"
 
 	// "github.com/KadirbekSharau/rentykz-backend/models"
+	"github.com/KadirbekSharau/rentykz-backend/models"
+	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -13,6 +15,21 @@ func NewDatabaseConnection() *gorm.DB {
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect database")
+	}
+
+	err = db.AutoMigrate(
+		&models.EntityUsers{},
+		&models.EntityOrganizations{},
+		&models.EntityCities{},
+		&models.EntityFields{},
+		&models.EntityFieldRates{},
+		&models.EntityModerators{},
+		&models.EntitySportType{},
+		&models.EntityBookings{},
+	)
+
+	if err != nil {
+		logrus.Fatal(err.Error())
 	}
  
 	return db

@@ -11,7 +11,7 @@ type EntityUsers struct {
 	gorm.Model
 	Fullname string `gorm:"type:varchar(255)"`
 	Email string `gorm:"type:varchar(255);unique;not null"`
-	Password  string `gorm:"type:varchar(255);not null"`
+	Password  string `gorm:"type:varchar(255)"`
 	Active    bool   `gorm:"type:bool;default:false"`
 	IsAdmin    bool   `gorm:"type:bool;default:false"`
 	SportTypes []EntitySportType `gorm:"foreignKey:UserID"`
@@ -19,6 +19,7 @@ type EntityUsers struct {
 	Bookings []EntityBookings `gorm:"foreignKey:UserID"`
 	Organizations []EntityOrganizations `gorm:"foreignKey:UserID"`
 	Fields []EntityFields `gorm:"foreignKey:UserID"`
+	Moderators []EntityModerators `gorm:"foreignKey:UserID"`
 }
 
 func (entity *EntityUsers) BeforeCreate(db *gorm.DB) error {

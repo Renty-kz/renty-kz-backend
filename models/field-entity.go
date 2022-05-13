@@ -8,18 +8,17 @@ import (
 
 type EntityCities struct {
 	gorm.Model
-	Name string `json:"name"`
-	UserID int
-	SportTypes []EntitySportType `gorm:"foreignKey:CityID"`
+	Name string
+	Fields []EntityFields `gorm:"foreignKey:CityID"`
+	UserID uint
 }
 
 type EntitySportType struct {
 	gorm.Model
-	Name string `json:"name"`
+	Name string
 	Fields []EntityFields `gorm:"foreignKey:SportTypeID"`
-	OrganizationID int
-	UserID int
-	CityID int
+	OrganizationID uint
+	UserID uint
 }
 
 type EntityFields struct {
@@ -28,15 +27,16 @@ type EntityFields struct {
 	Address string `gorm:"type:varchar(255)"`
 	Contacts string `gorm:"type:varchar(255)"`
 	Description string `gorm:"type:varchar(500)"`
+	ImageLinks []string 
 	Price string `gorm:"type:int"`
 	Capacity string `gorm:"type:int"`
 	FieldRates []EntityFieldRates `gorm:"foreignKey:FieldID"`
 	Bookings []EntityBookings `gorm:"foreignKey:FieldID"`
-	OrganizationID int
-	UserID int
-	CityID int
-	SportTypeID int
-	ModeratorID int
+	OrganizationID uint
+	UserID uint
+	CityID uint
+	SportTypeID uint
+	ModeratorID uint
 }
 
 type EntityFieldRates struct {
@@ -44,7 +44,7 @@ type EntityFieldRates struct {
 	Price uint
 	StartDate time.Time
 	EndDate time.Time
-	Name string `json:"name"`
-	Email string `json:"email"`
-	FieldID int
+	Name string
+	Email string
+	FieldID uint
 }
