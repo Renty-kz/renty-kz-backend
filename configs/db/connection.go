@@ -3,7 +3,6 @@ package db
 import (
 	"log"
 
-	// "github.com/KadirbekSharau/rentykz-backend/models"
 	"github.com/KadirbekSharau/rentykz-backend/models"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
@@ -21,17 +20,17 @@ func NewDatabaseConnection() *gorm.DB {
 		&models.EntityUsers{},
 		&models.EntityOrganizations{},
 		&models.EntityCities{},
+		&models.EntitySportType{},
 		&models.EntityFields{},
 		&models.EntityFieldRates{},
 		&models.EntityModerators{},
-		&models.EntitySportType{},
 		&models.EntityBookings{},
 	)
 
 	if err != nil {
 		logrus.Fatal(err.Error())
 	}
- 
+
 	return db
 }
 

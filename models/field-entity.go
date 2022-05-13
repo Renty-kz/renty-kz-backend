@@ -27,7 +27,7 @@ type EntityFields struct {
 	Address string `gorm:"type:varchar(255)"`
 	Contacts string `gorm:"type:varchar(255)"`
 	Description string `gorm:"type:varchar(500)"`
-	ImageLinks []string 
+	ImageLinks []string `gorm:"type:text"`
 	Price string `gorm:"type:int"`
 	Capacity string `gorm:"type:int"`
 	FieldRates []EntityFieldRates `gorm:"foreignKey:FieldID"`

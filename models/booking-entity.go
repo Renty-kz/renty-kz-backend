@@ -15,4 +15,5 @@ type EntityBookings struct {
 	OrganizationID uint
 	ModeratorID uint
 	CourtID uint
+	FieldID uint
 }
