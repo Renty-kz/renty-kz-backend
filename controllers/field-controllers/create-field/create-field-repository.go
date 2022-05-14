@@ -23,12 +23,12 @@ func (r *repository) CreateFieldRepository(input *model.EntityFields) (*model.En
 	db := r.db.Model(&fields)
 	errorCode := make(chan string, 1)
 
-	checkFieldExist := db.Debug().Select("*").Where("id = ?", input.ID).Find(&fields)
+	//checkFieldExist := db.Debug().Select("*").Where("id = ?", input.ID).Find(&fields)
 
-	if checkFieldExist.RowsAffected > 0 {
-		errorCode <- "CREATE_STUDENT_CONFLICT_409"
-		return &fields, <-errorCode
-	}
+	// if checkFieldExist.RowsAffected > 0 {
+	// 	errorCode <- "CREATE_STUDENT_CONFLICT_409"
+	// 	return &fields, <-errorCode
+	// }
 
 	fields.Name = input.Name
 	fields.Address = input.Address
@@ -37,10 +37,10 @@ func (r *repository) CreateFieldRepository(input *model.EntityFields) (*model.En
 	fields.Description = input.Description
 	fields.Contacts = input.Contacts
 
-	addNewStudent := db.Debug().Create(&fields)
+	addNewField := db.Debug().Create(&fields)
 	db.Commit()
 
-	if addNewStudent.Error != nil {
+	if addNewField.Error != nil {
 		errorCode <- "CREATE_STUDENT_FAILED_403"
 		return &fields, <-errorCode
 	} else {

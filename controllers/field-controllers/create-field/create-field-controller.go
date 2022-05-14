@@ -10,7 +10,7 @@ type service struct {
 	repository Repository
 }
 
-func NewServiceCreate(repository Repository) *service {
+func NewCreateFieldService(repository Repository) *service {
 	return &service{repository: repository}
 }
 

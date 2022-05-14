@@ -17,7 +17,7 @@ func InitFieldRoutes(db *gorm.DB, route *gin.Engine) {
 		handlerGetFields getFieldsHandler.GetFieldsHandler = getFieldsHandler.NewGetFieldsHandler(getFieldsService)
 
 		createFieldRepository createFieldController.Repository = createFieldController.NewRepositoryCreate(db)
-		createFieldService createFieldController.Service = createFieldController.NewServiceCreate(createFieldRepository)
+		createFieldService createFieldController.Service = createFieldController.NewCreateFieldService(createFieldRepository)
 		handlerCreateField createFieldHandler.CreateFieldHandler = createFieldHandler.NewCreateFieldHandler(createFieldService)
 	)
 
