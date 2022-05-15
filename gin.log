@@ -5,11 +5,11 @@
 [GIN-debug] GET    /css/*filepath            --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
 [GIN-debug] HEAD   /css/*filepath            --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
 [GIN-debug] Loaded HTML Templates (5): 
-	- footer.html
 	- header.html
 	- index.html
 	- template_register.html
 	- 
+	- footer.html
 
 [GIN-debug] POST   /api/v1/auth/login        --> github.com/KadirbekSharau/rentykz-backend/handlers/auth/login.Handler.LoginHandler-fm (4 handlers)
 [GIN-debug] POST   /api/v1/auth/register     --> github.com/KadirbekSharau/rentykz-backend/handlers/auth/register.Handler.ActiveUserRegisterHandler-fm (4 handlers)
@@ -20,5 +20,3 @@
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8080
-[GIN] 2022/05/15 - 17:08:08 | 404 |       8.167µs |             ::1 | POST     "/api/v1/register"
-[GIN] 2022/05/15 - 17:08:15 | 201 |  732.531125ms |             ::1 | POST     "/api/v1/auth/register"

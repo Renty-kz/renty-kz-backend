@@ -18,11 +18,11 @@ func AdminDataMigrator(db *gorm.DB) *models.EntityUsers {
 	}
 	newAdmin, errAdmin := registerAdminService.AdminRegisterService(&admin)
 	if errAdmin == "REGISTER_CONFLICT_409" || errAdmin == "REGISTER_FAILED_403" {
-		log.Fatal(errAdmin)
+		log.Printf(errAdmin)
 	}
 	return newAdmin;
 }
 
 func CitiesDataMigrator(db *gorm.DB) {
-	
+
 }

@@ -27,6 +27,7 @@ func NewDatabaseConnection() *gorm.DB {
 		&models.EntityBookings{},
 	)
 
+	AdminDataMigrator(db)
 	if err != nil {
 		logrus.Fatal(err.Error())
 	}
