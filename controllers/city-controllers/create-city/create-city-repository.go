@@ -13,7 +13,7 @@ type repository struct {
 	db *gorm.DB
 }
 
-func NewCreateFieldRepository(db *gorm.DB) *repository {
+func NewCreateCityRepository(db *gorm.DB) *repository {
 	return &repository{db: db}
 }
 
@@ -21,6 +21,13 @@ func (r *repository) CreateCityRepository(input *models.EntityCities) (*models.E
 	var city models.EntityCities
 	db := r.db.Model(&city)
 	errorCode := make(chan string, 1)
+
+	checkCityExist := db.Debug().Select("*").Where("name = ?", input.Name).Find(&city)
+
+	if checkCityExist.RowsAffected > 0 {
+		errorCode <- "CREATE_STUDENT_CONFLICT_409"
+		return &city, <-errorCode
+	}
 
 	city.Name = input.Name
 

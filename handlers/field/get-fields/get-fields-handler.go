@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type GetFieldsHandler interface {
+type Handler interface {
 	GetFieldsHandler(ctx *gin.Context)
 }
 

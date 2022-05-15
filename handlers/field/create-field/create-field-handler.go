@@ -8,7 +8,7 @@ import (
 	util "github.com/KadirbekSharau/rentykz-backend/util"
 )
 
-type CreateFieldHandler interface {
+type Handler interface {
 	CreateFieldHandler(ctx *gin.Context)
 }
 
@@ -45,9 +45,8 @@ func (h *handler) CreateFieldHandler(ctx *gin.Context) {
 	_, errCreateField := h.service.CreateFieldService(&input)
 
 	switch errCreateField {
-
 	case "CREATE_FIELD_CONFLICT_409":
-		util.APIResponse(ctx, "Npm field already exist", http.StatusConflict, http.MethodPost, nil)
+		util.APIResponse(ctx, "Name field already exist", http.StatusConflict, http.MethodPost, nil)
 		return
 
 	case "CREATE_FIELD_FAILED_403":

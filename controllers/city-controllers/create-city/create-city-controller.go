@@ -14,12 +14,11 @@ func NewCreateCityService(repository Repository) Service {
 	return &service{repository: repository}
 }
 
+/* Create city controller */
 func (s *service) CreateCityService(input *InputCreateCity) (*models.EntityCities, string) {
 	city := models.EntityCities{
 		Name: input.Name,
 	}
 
-	// newCity, errCity 
 	return s.repository.CreateCityRepository(&city)
-	// return newCity, errCity
 }

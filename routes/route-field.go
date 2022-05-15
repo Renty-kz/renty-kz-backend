@@ -14,11 +14,11 @@ func InitFieldRoutes(db *gorm.DB, route *gin.Engine) {
 	var (
 		getFieldsRepository getFieldsController.Repository = getFieldsController.NewGetFieldsRepository(db)
 		getFieldsService getFieldsController.Service = getFieldsController.NewGetFieldsService(getFieldsRepository)
-		handlerGetFields getFieldsHandler.GetFieldsHandler = getFieldsHandler.NewGetFieldsHandler(getFieldsService)
+		handlerGetFields getFieldsHandler.Handler = getFieldsHandler.NewGetFieldsHandler(getFieldsService)
 
 		createFieldRepository createFieldController.Repository = createFieldController.NewRepositoryCreate(db)
 		createFieldService createFieldController.Service = createFieldController.NewCreateFieldService(createFieldRepository)
-		handlerCreateField createFieldHandler.CreateFieldHandler = createFieldHandler.NewCreateFieldHandler(createFieldService)
+		handlerCreateField createFieldHandler.Handler = createFieldHandler.NewCreateFieldHandler(createFieldService)
 	)
 
 	groupRoute := route.Group("/api/v1")

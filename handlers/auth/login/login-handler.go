@@ -10,7 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type LoginHandler interface {
+type Handler interface {
 	LoginHandler(ctx *gin.Context)
 }
 

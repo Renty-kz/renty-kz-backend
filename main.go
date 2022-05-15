@@ -46,6 +46,7 @@ func main() {
 	server.LoadHTMLGlob("templates/*.html")
 	routes.InitAuthRoutes(db, server)
 	routes.InitFieldRoutes(db, server)
+	routes.InitCityRoutes(db, server)
 
 	viewRoutes := server.Group("/view")
 	{
