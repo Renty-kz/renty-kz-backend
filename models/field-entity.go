@@ -17,7 +17,6 @@ type EntitySportTypes struct {
 	gorm.Model
 	Name string
 	Fields []EntityFields `gorm:"foreignKey:SportTypeID"`
-	OrganizationID uint
 	AdminID uint
 }
 
@@ -28,8 +27,8 @@ type EntityFields struct {
 	Contacts []string `gorm:"type:text"`
 	Description string `gorm:"type:varchar(500)"`
 	ImageLinks []string `gorm:"type:text"`
-	Price string `gorm:"type:int"`
-	Capacity string `gorm:"type:int"`
+	Price uint
+	Capacity uint
 	FieldRates []EntityFieldRates `gorm:"foreignKey:FieldID"`
 	Bookings []EntityBookings `gorm:"foreignKey:FieldID"`
 	OrganizationID uint

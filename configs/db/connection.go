@@ -27,7 +27,23 @@ func NewDatabaseConnection() *gorm.DB {
 		&models.EntityBookings{},
 	)
 
-	AdminDataMigrator(db)
+	AccountsDataMigrator(db)
+	CityDataMigrator("Алматы", db)
+	CityDataMigrator("Нур-Султан", db)
+	CityDataMigrator("Актау", db)
+	CityDataMigrator("Атырау", db)
+	CityDataMigrator("Жанаозен", db)
+	CityDataMigrator("Павлодар", db)
+	CityDataMigrator("Петропавловск", db)
+	CityDataMigrator("Семей", db)
+	CityDataMigrator("Туркестан", db)
+	CityDataMigrator("Шымкент", db)
+	CityDataMigrator("Талдыкорган", db)
+	CityDataMigrator("Тараз", db)
+	CityDataMigrator("Уральск", db)
+	CityDataMigrator("Усть-Каменогорск", db)
+
+	SportTypeDataMigrator("Football", db)
 	if err != nil {
 		logrus.Fatal(err.Error())
 	}

@@ -18,6 +18,8 @@ func NewRepositoryLogin(db *gorm.DB) *repository {
 	return &repository{db: db}
 }
 
+//func CheckEmailExists() {}
+
 func (r *repository) LoginRepository(input *model.EntityUsers) (*model.EntityUsers, string) {
 
 	var users model.EntityUsers

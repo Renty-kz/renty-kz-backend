@@ -48,7 +48,7 @@ func ErrUserRegisterHandler(resultRegister *models.EntityUsers, ctx *gin.Context
 		return
 
 	case "REGISTER_FAILED_403":
-		util.APIResponse(ctx, "Register new account failed", http.StatusForbidden, http.MethodPost, nil)
+		util.APIResponse(ctx, "Register new User account failed", http.StatusForbidden, http.MethodPost, nil)
 		return
 
 	default:
@@ -69,7 +69,7 @@ func ErrUserRegisterHandler(resultRegister *models.EntityUsers, ctx *gin.Context
 			return
 		}
 
-		util.APIResponse(ctx, "Register new account successfully", http.StatusCreated, http.MethodPost, nil)
+		util.APIResponse(ctx, "Register new user account successfully", http.StatusCreated, http.MethodPost, nil)
 	}
 }
 
@@ -103,7 +103,7 @@ func ErrOrganizationRegisterHandler(resultRegister *models.EntityOrganizations, 
 			return
 		}
 
-		util.APIResponse(ctx, "Register new account successfully", http.StatusCreated, http.MethodPost, nil)
+		util.APIResponse(ctx, "Register new organization account successfully", http.StatusCreated, http.MethodPost, nil)
 	}
 }
 
@@ -137,6 +137,6 @@ func ErrModeratorRegisterHandler(resultRegister *models.EntityModerators, ctx *g
 			return
 		}
 
-		util.APIResponse(ctx, "Register new account successfully", http.StatusCreated, http.MethodPost, nil)
+		util.APIResponse(ctx, "Register new moderator account successfully", http.StatusCreated, http.MethodPost, nil)
 	}
 }

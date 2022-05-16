@@ -1,4 +1,4 @@
-package createCityHandler
+package createSportTypeHandler
 
 import (
 	"net/http"
@@ -44,15 +44,15 @@ func (h *handler) CreateCityHandler(ctx *gin.Context) {
 	_, errCreateCity := h.service.CreateCityService(&input)
 
 	switch errCreateCity {
-	case "CREATE_CITY_CONFLICT_409":
+	case "CREATE_FIELD_CONFLICT_409":
 		util.APIResponse(ctx, "Name field already exist", http.StatusConflict, http.MethodPost, nil)
 		return
 
-	case "CREATE_CITY_FAILED_403":
-		util.APIResponse(ctx, "Create new city failed", http.StatusForbidden, http.MethodPost, nil)
+	case "CREATE_FIELD_FAILED_403":
+		util.APIResponse(ctx, "Create new field account failed", http.StatusForbidden, http.MethodPost, nil)
 		return
 
 	default:
-		util.APIResponse(ctx, "Create new city successfully", http.StatusCreated, http.MethodPost, nil)
+		util.APIResponse(ctx, "Create new field account successfully", http.StatusCreated, http.MethodPost, nil)
 	}
 }

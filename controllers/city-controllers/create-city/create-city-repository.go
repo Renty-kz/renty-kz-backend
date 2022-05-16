@@ -25,11 +25,12 @@ func (r *repository) CreateCityRepository(input *models.EntityCities) (*models.E
 	checkCityExist := db.Debug().Select("*").Where("name = ?", input.Name).Find(&city)
 
 	if checkCityExist.RowsAffected > 0 {
-		errorCode <- "CREATE_STUDENT_CONFLICT_409"
+		errorCode <- "CREATE_CITY_CONFLICT_409"
 		return &city, <-errorCode
 	}
 
 	city.Name = input.Name
+	city.AdminID = 1
 
 	addNewCity := db.Debug().Create(&city)
 	db.Commit()

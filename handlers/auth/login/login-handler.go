@@ -7,11 +7,12 @@ import (
 	"github.com/gin-gonic/gin"
 	loginAuth "github.com/KadirbekSharau/rentykz-backend/controllers/auth-controllers/login"
 
-	"github.com/sirupsen/logrus"
 )
 
 type Handler interface {
-	LoginHandler(ctx *gin.Context)
+	UserLoginHandler(ctx *gin.Context)
+	OrganizationLoginHandler(ctx *gin.Context)
+	ModeratorLoginHandler(ctx *gin.Context)
 }
 
 type handler struct {
@@ -22,30 +23,11 @@ func NewLoginHandler(service loginAuth.Service) *handler {
 	return &handler{service: service}
 }
 
-func (h *handler) LoginHandler(ctx *gin.Context) {
+/* User Login Handler */
+func (h *handler) UserLoginHandler(ctx *gin.Context) {
 
 	var input loginAuth.InputLogin
 	ctx.ShouldBindJSON(&input)
-
-	config := util.ErrorConfig{
-		Options: []util.ErrorMetaConfig{
-			{
-				Tag:     "required",
-				Field:   "Email",
-				Message: "email is required on body",
-			},
-			{
-				Tag:     "email",
-				Field:   "Email",
-				Message: "email format is not valid",
-			},
-			{
-				Tag:     "required",
-				Field:   "Password",
-				Message: "password is required on body",
-			},
-		},
-	}
 
 	errResponse, errCount := util.GoValidator(&input, config.Options)
 
@@ -56,30 +38,41 @@ func (h *handler) LoginHandler(ctx *gin.Context) {
 
 	resultLogin, errLogin := h.service.LoginService(&input)
 
-	switch errLogin {
+	UserLoginTokenHandler(ctx, errLogin, resultLogin)
+}
 
-	case "LOGIN_NOT_FOUND_404":
-		util.APIResponse(ctx, "User account is not registered", http.StatusNotFound, http.MethodPost, nil)
+/* Organization Login Handler */
+func (h *handler) OrganizationLoginHandler(ctx *gin.Context) {
+
+	var input loginAuth.InputLogin
+	ctx.ShouldBindJSON(&input)
+
+	errResponse, errCount := util.GoValidator(&input, config.Options)
+
+	if errCount > 0 {
+		util.ValidatorErrorResponse(ctx, http.StatusBadRequest, http.MethodPost, errResponse)
 		return
-
-	case "LOGIN_NOT_ACTIVE_403":
-		util.APIResponse(ctx, "User account is not active", http.StatusForbidden, http.MethodPost, nil)
-		return
-
-	case "LOGIN_WRONG_PASSWORD_403":
-		util.APIResponse(ctx, "Username or password is wrong", http.StatusForbidden, http.MethodPost, nil)
-		return
-
-	default:
-		accessTokenData := map[string]interface{}{"id": resultLogin.ID, "email": resultLogin.Email}
-		accessToken, errToken := util.Sign(accessTokenData, "JWT_SECRET", 24*60*1)
-
-		if errToken != nil {
-			defer logrus.Error(errToken.Error())
-			util.APIResponse(ctx, "Generate accessToken failed", http.StatusBadRequest, http.MethodPost, nil)
-			return
-		}
-
-		util.APIResponse(ctx, "Login successfully", http.StatusOK, http.MethodPost, map[string]string{"accessToken": accessToken})
 	}
+
+	resultLogin, errLogin := h.service.LoginService(&input)
+
+	UserLoginTokenHandler(ctx, errLogin, resultLogin)
+}
+
+/* Moderator Login Handler */
+func (h *handler) ModeratorLoginHandler(ctx *gin.Context) {
+
+	var input loginAuth.InputLogin
+	ctx.ShouldBindJSON(&input)
+
+	errResponse, errCount := util.GoValidator(&input, config.Options)
+
+	if errCount > 0 {
+		util.ValidatorErrorResponse(ctx, http.StatusBadRequest, http.MethodPost, errResponse)
+		return
+	}
+
+	resultLogin, errLogin := h.service.LoginService(&input)
+
+	UserLoginTokenHandler(ctx, errLogin, resultLogin)
 }

@@ -1,6 +1,8 @@
 package createFieldController
 
-import model "github.com/KadirbekSharau/rentykz-backend/models"
+import (
+	model "github.com/KadirbekSharau/rentykz-backend/models"
+)
 
 type Service interface {
 	CreateFieldService(input *InputCreateField) (*model.EntityFields, string)
@@ -23,6 +25,11 @@ func (s *service) CreateFieldService(input *InputCreateField) (*model.EntityFiel
 		Capacity: input.Capacity,
 		Description: input.Description,
 		Contacts: input.Contacts,
+		ImageLinks: input.ImageLinks,
+		OrganizationID: input.OrganizationID,
+		CityID: input.CityID,
+		SportTypeID: input.SportTypeID,
+		ModeratorID: input.ModeratorID,
 	}
 
 	resultCreateField, errCreateField := s.repository.CreateFieldRepository(&fields)

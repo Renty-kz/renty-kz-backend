@@ -13,7 +13,6 @@ type EntityOrganizations struct {
 	Bookings []EntityBookings `gorm:"foreignKey:OrganizationID"`
 	Moderators []EntityModerators `gorm:"foreignKey:OrganizationID"`
 	Fields []EntityFields `gorm:"foreignKey:OrganizationID"`
-	SportTypes []EntitySportTypes `gorm:"foreignKey:OrganizationID"`
 	AdminID uint
 }
 
