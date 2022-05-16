@@ -11,7 +11,7 @@ type EntityBookings struct {
 	Price uint
 	StartDate time.Time
 	EndDate  time.Time
-	UserID uint
+	AdminID uint
 	OrganizationID uint
 	ModeratorID uint
 	CourtID uint

@@ -21,11 +21,11 @@ type AccessToken struct {
 	Claims MetaToken
 }
 
-func Sign(Data map[string]interface{}, SecrePublicKeyEnvName string, ExpiredAt time.Duration) (string, error) {
+func Sign(Data map[string]interface{}, SecretPublicKeyEnvName string, ExpiredAt time.Duration) (string, error) {
 
 	expiredAt := time.Now().Add(time.Duration(time.Minute) * ExpiredAt).Unix()
 
-	jwtSecretKey := GodotEnv(SecrePublicKeyEnvName)
+	jwtSecretKey := GodotEnv(SecretPublicKeyEnvName)
 
 	claims := jwt.MapClaims{}
 	claims["exp"] = expiredAt

@@ -7,9 +7,11 @@ import (
 )
 
 type Service interface {
-	ActiveUserRegisterService(input *InputRegister) (*model.EntityUsers, string)
-	InactiveUserRegisterService(input *InputRegister) (*model.EntityUsers, string)
-	AdminRegisterService(input *InputRegister) (*model.EntityUsers, string)
+	ActiveUserRegisterService(input *InputUserRegister) (*model.EntityUsers, string)
+	InactiveUserRegisterService(input *InputUserRegister) (*model.EntityUsers, string)
+	AdminRegisterService(input *InputUserRegister) (*model.EntityUsers, string)
+	OrganizationRegisterService(input *InputOrganizationRegister) (*model.EntityOrganizations, string)
+	ModeratorRegisterService(input *InputModeratorRegister) (*model.EntityModerators, string)
 }
 
 type service struct {
@@ -21,7 +23,7 @@ func NewServiceRegister(repository Repository) *service {
 }
 
 /* Active User Registration Service */
-func (s *service) ActiveUserRegisterService(input *InputRegister) (*model.EntityUsers, string) {
+func (s *service) ActiveUserRegisterService(input *InputUserRegister) (*model.EntityUsers, string) {
 
 	users := model.EntityUsers{
 		Fullname: input.Fullname,
@@ -35,7 +37,7 @@ func (s *service) ActiveUserRegisterService(input *InputRegister) (*model.Entity
 }
 
 /* Inactive User Registration Service */
-func (s *service) InactiveUserRegisterService(input *InputRegister) (*model.EntityUsers, string) {
+func (s *service) InactiveUserRegisterService(input *InputUserRegister) (*model.EntityUsers, string) {
 
 	users := model.EntityUsers{
 		Fullname: input.Fullname,
@@ -49,7 +51,7 @@ func (s *service) InactiveUserRegisterService(input *InputRegister) (*model.Enti
 }
 
 /* Admin Registration Service */
-func (s *service) AdminRegisterService(input *InputRegister) (*model.EntityUsers, string) {
+func (s *service) AdminRegisterService(input *InputUserRegister) (*model.EntityUsers, string) {
 
 	users := model.EntityUsers{
 		Fullname: input.Fullname,
@@ -58,6 +60,35 @@ func (s *service) AdminRegisterService(input *InputRegister) (*model.EntityUsers
 	}
 
 	resultRegister, errRegister := s.repository.AdminRegisterRepository(&users)
+
+	return resultRegister, errRegister
+}
+
+/* Organization Registration Service */
+func (s *service) OrganizationRegisterService(input *InputOrganizationRegister) (*model.EntityOrganizations, string) {
+
+	organization := model.EntityOrganizations{
+		Fullname: input.Fullname,
+		Email:    input.Email,
+		Password: input.Password,
+	}
+
+	resultRegister, errRegister := s.repository.OrganizationRegisterRepository(&organization)
+
+	return resultRegister, errRegister
+}
+
+/* Moderator Registration Service */
+func (s *service) ModeratorRegisterService(input *InputModeratorRegister) (*model.EntityModerators, string) {
+
+	moderator := model.EntityModerators{
+		Fullname: input.Fullname,
+		Email:    input.Email,
+		Password: input.Password,
+		OrganizationID: input.OrganizationID,
+	}
+
+	resultRegister, errRegister := s.repository.ModeratorRegisterRepository(&moderator)
 
 	return resultRegister, errRegister
 }

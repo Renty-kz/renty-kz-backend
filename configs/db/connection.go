@@ -20,7 +20,7 @@ func NewDatabaseConnection() *gorm.DB {
 		&models.EntityUsers{},
 		&models.EntityOrganizations{},
 		&models.EntityCities{},
-		&models.EntitySportType{},
+		&models.EntitySportTypes{},
 		&models.EntityFields{},
 		&models.EntityFieldRates{},
 		&models.EntityModerators{},

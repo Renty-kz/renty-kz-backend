@@ -14,17 +14,16 @@ type EntityUsers struct {
 	Password  string `gorm:"type:varchar(255)"`
 	Active    bool   `gorm:"type:bool;default:false"`
 	IsAdmin    bool   `gorm:"type:bool;default:false"`
-	SportTypes []EntitySportType `gorm:"foreignKey:UserID"`
-	Cities []EntityCities `gorm:"foreignKey:UserID"`
-	Bookings []EntityBookings `gorm:"foreignKey:UserID"`
-	Organizations []EntityOrganizations `gorm:"foreignKey:UserID"`
-	Fields []EntityFields `gorm:"foreignKey:UserID"`
-	Moderators []EntityModerators `gorm:"foreignKey:UserID"`
+	SportTypes []EntitySportTypes `gorm:"foreignKey:AdminID"`
+	Cities []EntityCities `gorm:"foreignKey:AdminID"`
+	Bookings []EntityBookings `gorm:"foreignKey:AdminID"`
+	Organizations []EntityOrganizations `gorm:"foreignKey:AdminID"`
+	Fields []EntityFields `gorm:"foreignKey:AdminID"`
+	Moderators []EntityModerators `gorm:"foreignKey:AdminID"`
 }
 
 func (entity *EntityUsers) BeforeCreate(db *gorm.DB) error {
 	entity.Password = util.HashPassword(entity.Password)
-	entity.CreatedAt = time.Now().Local()
 	return nil
 }
 

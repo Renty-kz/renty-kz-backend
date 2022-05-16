@@ -10,22 +10,22 @@ type EntityCities struct {
 	gorm.Model
 	Name string
 	Fields []EntityFields `gorm:"foreignKey:CityID"`
-	UserID uint
+	AdminID uint
 }
 
-type EntitySportType struct {
+type EntitySportTypes struct {
 	gorm.Model
 	Name string
 	Fields []EntityFields `gorm:"foreignKey:SportTypeID"`
 	OrganizationID uint
-	UserID uint
+	AdminID uint
 }
 
 type EntityFields struct {
 	gorm.Model
 	Name string `gorm:"type:varchar(255)"`
 	Address string `gorm:"type:varchar(255)"`
-	Contacts string `gorm:"type:varchar(255)"`
+	Contacts []string `gorm:"type:text"`
 	Description string `gorm:"type:varchar(500)"`
 	ImageLinks []string `gorm:"type:text"`
 	Price string `gorm:"type:int"`
@@ -33,7 +33,7 @@ type EntityFields struct {
 	FieldRates []EntityFieldRates `gorm:"foreignKey:FieldID"`
 	Bookings []EntityBookings `gorm:"foreignKey:FieldID"`
 	OrganizationID uint
-	UserID uint
+	AdminID uint
 	CityID uint
 	SportTypeID uint
 	ModeratorID uint

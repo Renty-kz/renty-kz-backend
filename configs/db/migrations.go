@@ -9,14 +9,14 @@ import (
 )
 
 func AdminDataMigrator(db *gorm.DB) *models.EntityUsers {
-	registerAdminRepository := registerAuthController.NewRepositoryRegister(db)
-	registerAdminService := registerAuthController.NewServiceRegister(registerAdminRepository)
-	admin := registerAuthController.InputRegister{
+	registerRepository := registerAuthController.NewRepositoryRegister(db)
+	registerService := registerAuthController.NewServiceRegister(registerRepository)
+	admin := registerAuthController.InputUserRegister{
 		Fullname: "admin1",
 		Email: "admin1@gmail.com",
 		Password: "admin532",
 	}
-	newAdmin, errAdmin := registerAdminService.AdminRegisterService(&admin)
+	newAdmin, errAdmin := registerService.AdminRegisterService(&admin)
 	if errAdmin == "REGISTER_CONFLICT_409" || errAdmin == "REGISTER_FAILED_403" {
 		log.Printf(errAdmin)
 	}
