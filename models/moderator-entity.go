@@ -8,6 +8,7 @@ import (
 type EntityModerators struct {
 	gorm.Model
 	Fullname string `gorm:"type:varchar(255)"`
+	PhoneNumber string `gorm:"type:varchar(12)"`
 	Email string `gorm:"type:varchar(255);unique;not null"`
 	Password  string `gorm:"type:varchar(255);not null"`
 	Fields []EntityFields `gorm:"foreignKey:ModeratorID"`

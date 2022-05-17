@@ -2,6 +2,7 @@ package util
 
 import (
 	"encoding/json"
+	"errors"
 	"strings"
 	"time"
 
@@ -48,7 +49,13 @@ func Sign(Data map[string]interface{}, SecretPublicKeyEnvName string, ExpiredAt 
 
 func VerifyTokenHeader(ctx *gin.Context, SecrePublicKeyEnvName string) (*jwt.Token, error) {
 	tokenHeader := ctx.GetHeader("Authorization")
-	accessToken := strings.SplitAfter(tokenHeader, "Bearer")[1]
+	splitToken := strings.SplitAfter(tokenHeader, "Bearer")
+	if len(splitToken) < 2 {
+		err := errors.New("error: Authorization not found")
+		logrus.Error(err.Error())
+		return nil, err
+	}
+	accessToken := splitToken[1]
 	jwtSecretKey := GodotEnv(SecrePublicKeyEnvName)
 
 	token, err := jwt.Parse(strings.Trim(accessToken, " "), func(token *jwt.Token) (interface{}, error) {

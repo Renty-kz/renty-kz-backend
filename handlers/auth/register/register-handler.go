@@ -1,7 +1,6 @@
 package registerHandler
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/KadirbekSharau/rentykz-backend/controllers/auth-controllers/register"
@@ -30,7 +29,6 @@ func (h *handler) ActiveUserRegisterHandler(ctx *gin.Context) {
 
 	var input registerAuthController.InputUserRegister
 	ctx.ShouldBindJSON(&input)
-	fmt.Printf(input.Password + "\n")
 	errResponse, errCount := util.GoValidator(input, config.Options)
 
 	if errCount > 0 {
@@ -38,8 +36,7 @@ func (h *handler) ActiveUserRegisterHandler(ctx *gin.Context) {
 		return
 	}
 
-	resultRegister, errRegister := h.service.InactiveUserRegisterService(&input)
-	fmt.Printf(resultRegister.Password + "\n")
+	resultRegister, errRegister := h.service.ActiveUserRegisterService(&input)
 	ErrUserRegisterHandler(resultRegister, ctx, errRegister)
 }
 
@@ -56,7 +53,7 @@ func (h *handler) InactiveUserRegisterHandler(ctx *gin.Context) {
 		return
 	}
 
-	resultRegister, errRegister := h.service.AdminRegisterService(&input)
+	resultRegister, errRegister := h.service.InactiveUserRegisterService(&input)
 
 	ErrUserRegisterHandler(resultRegister, ctx, errRegister)
 }
@@ -74,7 +71,7 @@ func (h *handler) AdminRegisterHandler(ctx *gin.Context) {
 		return
 	}
 
-	resultRegister, errRegister := h.service.ActiveUserRegisterService(&input)
+	resultRegister, errRegister := h.service.AdminRegisterService(&input)
 
 	ErrUserRegisterHandler(resultRegister, ctx, errRegister)
 }

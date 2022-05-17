@@ -3,6 +3,7 @@ package models
 import (
 	"time"
 
+	"github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
@@ -24,9 +25,9 @@ type EntityFields struct {
 	gorm.Model
 	Name string `gorm:"type:varchar(255)"`
 	Address string `gorm:"type:varchar(255)"`
-	Contacts []string `gorm:"type:text"`
+	Contacts pq.StringArray `gorm:"type:text[];not null"`
 	Description string `gorm:"type:varchar(500)"`
-	ImageLinks []string `gorm:"type:text"`
+	ImageLinks pq.StringArray `gorm:"type:text[];not null"`
 	Price uint
 	Capacity uint
 	FieldRates []EntityFieldRates `gorm:"foreignKey:FieldID"`

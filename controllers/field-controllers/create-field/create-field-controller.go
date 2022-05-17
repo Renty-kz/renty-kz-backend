@@ -2,6 +2,7 @@ package createFieldController
 
 import (
 	model "github.com/KadirbekSharau/rentykz-backend/models"
+	//"github.com/lib/pq"
 )
 
 type Service interface {
@@ -17,7 +18,6 @@ func NewCreateFieldService(repository Repository) *service {
 }
 
 func (s *service) CreateFieldService(input *InputCreateField) (*model.EntityFields, string) {
-
 	fields := model.EntityFields{
 		Name: input.Name,
 		Address: input.Address,

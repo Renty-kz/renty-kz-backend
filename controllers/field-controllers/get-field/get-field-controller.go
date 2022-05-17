@@ -1,58 +1,23 @@
 package getFieldController
 
-import (
-	"net/http"
+import "github.com/KadirbekSharau/rentykz-backend/models"
 
-	"github.com/KadirbekSharau/rentykz-backend/models"
-	"github.com/KadirbekSharau/rentykz-backend/handlers/field/get-field"
-	"github.com/KadirbekSharau/rentykz-backend/util"
-	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
-)
-
-type FieldController interface {
-	FindAll() []models.EntityFields
-	Save(ctx *gin.Context) error
-	ShowAll(ctx *gin.Context)
+type Service interface {
+	GetFieldByIdService(input *InputField) (*models.EntityFields, string)
 }
 
-type fieldController struct {
-	service getFieldService.FieldService
+type service struct {
+	repository Repository
 }
 
-var validate *validator.Validate
+func NewService(repository Repository) *service {
+	return &service{repository: repository}
+}
 
-func New(service getFieldService.FieldService) FieldController {
-	validate = validator.New()
-	validate.RegisterValidation("is-cool", util.ValidateTitle)
-	return &fieldController{
-		service: service,
+func (s *service) GetFieldByIdService(input *InputField) (*models.EntityFields, string) {
+
+	field := InputField{
+		ID: input.ID,
 	}
-}
-
-func (c *fieldController) FindAll() []models.EntityFields {
-	return c.service.FindAll()
-}
-
-func (c *fieldController) Save(ctx *gin.Context) error {
-	var field models.EntityFields
-	err := ctx.ShouldBindJSON(&field)
-	if err != nil {
-		return err
-	}
-	err = validate.Struct(field)
-	if err != nil {
-		return err
-	}
-	c.service.Save(field)
-	return nil
-}
-
-func (c *fieldController) ShowAll(ctx *gin.Context) {
-	fields := c.service.FindAll()
-	data := gin.H{
-		"Title" : "Renty",
-		"fields" : fields,
-	}
-	ctx.HTML(http.StatusOK, "index.html", data)
+	return s.repository.GetFieldByIdRepository(field)
 }

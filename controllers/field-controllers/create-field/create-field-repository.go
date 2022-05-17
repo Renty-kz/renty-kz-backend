@@ -1,6 +1,10 @@
 package createFieldController
 
 import (
+	//"fmt"
+
+	"fmt"
+
 	model "github.com/KadirbekSharau/rentykz-backend/models"
 	"gorm.io/gorm"
 )
@@ -26,9 +30,12 @@ func (r *repository) CreateFieldRepository(input *model.EntityFields) (*model.En
 	checkFieldExist := db.Debug().Select("*").Where("name = ?", input.Name).Find(&fields)
 
 	if checkFieldExist.RowsAffected > 0 {
-		errorCode <- "CREATE_STUDENT_CONFLICT_409"
+		errorCode <- "CREATE_FIELD_CONFLICT_409"
 		return &fields, <-errorCode
 	}
+
+	// fmt.Print(input)
+	// fmt.Printf("\n")
 
 	fields.Name = input.Name
 	fields.Address = input.Address
@@ -42,7 +49,8 @@ func (r *repository) CreateFieldRepository(input *model.EntityFields) (*model.En
 	fields.SportTypeID = input.SportTypeID
 	fields.OrganizationID = input.OrganizationID
 	fields.ModeratorID = input.ModeratorID
-
+	fmt.Print(fields.Contacts)
+	fmt.Print("\n")
 	addNewField := db.Debug().Create(&fields)
 	db.Commit()
 

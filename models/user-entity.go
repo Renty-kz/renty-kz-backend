@@ -10,6 +10,7 @@ import (
 type EntityUsers struct {
 	gorm.Model
 	Fullname string `gorm:"type:varchar(255)"`
+	PhoneNumber string `gorm:"type:varchar(12)"`
 	Email string `gorm:"type:varchar(255);unique;not null"`
 	Password  string `gorm:"type:varchar(255)"`
 	Active    bool   `gorm:"type:bool;default:false"`

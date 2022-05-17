@@ -1,25 +1,56 @@
-package getFieldService
+package getFieldHandler
 
-import "github.com/KadirbekSharau/rentykz-backend/models"
+import (
+	"net/http"
 
-type FieldService interface {
-	Save(models.EntityFields) models.EntityFields
-	FindAll() []models.EntityFields
+	getFieldController "github.com/KadirbekSharau/rentykz-backend/controllers/field-controllers/get-field"
+	"github.com/KadirbekSharau/rentykz-backend/util"
+	"github.com/gin-gonic/gin"
+)
+
+type Handler interface {
+	GetFieldByIdHandler(ctx *gin.Context)
 }
 
-type fieldService struct {
-	fields []models.EntityFields
+type handler struct {
+	service getFieldController.Service
 }
 
-func New() FieldService {
-	return &fieldService{}
+func NewHandler(service getFieldController.Service) *handler {
+	return &handler{service: service}
 }
 
-func (service *fieldService) Save(field models.EntityFields) models.EntityFields {
-	service.fields = append(service.fields, field)
-	return field
-} 
- 
-func (service *fieldService) FindAll() []models.EntityFields {
-	return service.fields
+func (h *handler) GetFieldByIdHandler(ctx *gin.Context) {
+	var input getFieldController.InputField
+
+	input.ID = ctx.Param("id")
+
+	config := util.ErrorConfig{
+		Options: []util.ErrorMetaConfig{
+			{
+				Tag:     "required",
+				Field:   "ID",
+				Message: "id is required on param",
+			},
+		},
+	}
+
+	errResponse, errCount := util.GoValidator(&input, config.Options)
+
+	if errCount > 0 {
+		util.ValidatorErrorResponse(ctx, http.StatusBadRequest, http.MethodGet, errResponse)
+		return
+	}
+
+	resultField, errResultField := h.service.GetFieldByIdService(&input)
+
+	switch errResultField {
+
+	case "RESULT_STUDENT_NOT_FOUND_404":
+		util.APIResponse(ctx, "Student data is not exist or deleted", http.StatusNotFound, http.MethodGet, nil)
+		return
+
+	default:
+		util.APIResponse(ctx, "Result Student data successfully", http.StatusOK, http.MethodGet, resultField)
+	}
 }

@@ -7,8 +7,9 @@ import (
 
 type EntityOrganizations struct {
 	gorm.Model
-	Fullname string
-	Email string
+	Fullname string `gorm:"type:varchar(255)"`
+	PhoneNumber string `gorm:"type:varchar(12)"`
+	Email string `gorm:"type:varchar(255);unique;not null"`
 	Password string `gorm:"type:varchar(255);not null"`
 	Bookings []EntityBookings `gorm:"foreignKey:OrganizationID"`
 	Moderators []EntityModerators `gorm:"foreignKey:OrganizationID"`
