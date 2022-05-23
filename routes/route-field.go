@@ -30,6 +30,10 @@ func InitFieldRoutes(db *gorm.DB, route *gin.Engine) {
 
 	groupRoute := route.Group("/api/v1")
 	groupRoute.GET("/field", handlerGetFields.GetFieldsHandler)
-	groupRoute.GET("/field/:id", handlerGetField.GetFieldByIdHandler)
+	groupRoute.GET("/sporttype/:id/fields", handlerGetFields.GetFieldsBySportTypeIdHandler)
+	groupRoute.GET("/organization/:id/fields", handlerGetFields.GetFieldsByOrganizationIdHandler)/* needs middleware */
+	groupRoute.GET("/moderator/:id/fields", handlerGetFields.GetFieldsByModeratorIdHandler)/* needs middleware */
+	groupRoute.GET("/city/:id/fields", handlerGetFields.GetFieldsByCityIdHandler)
+	groupRoute.GET("/field/:id", handlerGetField.GetFieldByIdHandler).Use(middlewares.Auth())
 	groupRoute.POST("/field", handlerCreateField.CreateFieldHandler).Use(middlewares.Auth())
 }

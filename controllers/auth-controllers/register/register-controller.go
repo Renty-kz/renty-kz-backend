@@ -10,7 +10,7 @@ type Service interface {
 	ActiveUserRegisterService(input *InputUserRegister) (*model.EntityUsers, string)
 	InactiveUserRegisterService(input *InputUserRegister) (*model.EntityUsers, string)
 	AdminRegisterService(input *InputUserRegister) (*model.EntityUsers, string)
-	OrganizationRegisterService(input *InputOrganizationRegister) (*model.EntityOrganizations, string)
+	InactiveOrganizationRegisterService(input *InputOrganizationRegister) (*model.EntityOrganizations, string)
 	ModeratorRegisterService(input *InputModeratorRegister) (*model.EntityModerators, string)
 }
 
@@ -64,8 +64,8 @@ func (s *service) AdminRegisterService(input *InputUserRegister) (*model.EntityU
 	return resultRegister, errRegister
 }
 
-/* Organization Registration Service */
-func (s *service) OrganizationRegisterService(input *InputOrganizationRegister) (*model.EntityOrganizations, string) {
+/* Inactive Organization Registration Service */
+func (s *service) InactiveOrganizationRegisterService(input *InputOrganizationRegister) (*model.EntityOrganizations, string) {
 
 	organization := model.EntityOrganizations{
 		Fullname: input.Fullname,
@@ -73,7 +73,7 @@ func (s *service) OrganizationRegisterService(input *InputOrganizationRegister) 
 		Password: input.Password,
 	}
 
-	resultRegister, errRegister := s.repository.OrganizationRegisterRepository(&organization)
+	resultRegister, errRegister := s.repository.InactiveOrganizationRegisterRepository(&organization)
 
 	return resultRegister, errRegister
 }

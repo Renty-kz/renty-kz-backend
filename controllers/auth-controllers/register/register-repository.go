@@ -11,7 +11,7 @@ type Repository interface {
 	ActiveUserRegisterRepository(input *model.EntityUsers) (*model.EntityUsers, string)
 	InactiveUserRegisterRepository(input *model.EntityUsers) (*model.EntityUsers, string)
 	AdminRegisterRepository(input *model.EntityUsers) (*model.EntityUsers, string)
-	OrganizationRegisterRepository(input *model.EntityOrganizations) (*model.EntityOrganizations, string)
+	InactiveOrganizationRegisterRepository(input *model.EntityOrganizations) (*model.EntityOrganizations, string)
 	ModeratorRegisterRepository(input *model.EntityModerators) (*model.EntityModerators, string)
 }
 
@@ -120,8 +120,8 @@ func (r *repository) AdminRegisterRepository(input *model.EntityUsers) (*model.E
 	return &users, <-errorCode
 }
 
-/* Organization Registration Repository */
-func (r *repository) OrganizationRegisterRepository(input *model.EntityOrganizations) (*model.EntityOrganizations, string) {
+/* Inactive Organization Registration Repository */
+func (r *repository) InactiveOrganizationRegisterRepository(input *model.EntityOrganizations) (*model.EntityOrganizations, string) {
 	var organization model.EntityOrganizations
 	//var admin model.EntityUsers
 	db := r.db.Model(&organization)
@@ -138,6 +138,7 @@ func (r *repository) OrganizationRegisterRepository(input *model.EntityOrganizat
 	organization.Fullname = input.Fullname
 	organization.Email = input.Email
 	organization.Password = input.Password
+	organization.Active = true
 	organization.AdminID = 1
 
 	addNewOrganization := db.Debug().Create(&organization)
@@ -151,6 +152,7 @@ func (r *repository) OrganizationRegisterRepository(input *model.EntityOrganizat
 	
 	return &organization, <-errorCode
 }
+
 
 /* Moderator Registration Repository */
 func (r *repository) ModeratorRegisterRepository(input *model.EntityModerators) (*model.EntityModerators, string) {

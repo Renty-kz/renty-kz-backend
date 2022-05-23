@@ -23,7 +23,7 @@ func NewHandler(service getFieldController.Service) *handler {
 func (h *handler) GetFieldByIdHandler(ctx *gin.Context) {
 	var input getFieldController.InputField
 
-	input.ID = ctx.Param("id")
+	input.ID = ctx.Params.ByName("id")
 
 	config := util.ErrorConfig{
 		Options: []util.ErrorMetaConfig{

@@ -19,5 +19,5 @@ func (s *service) GetFieldByIdService(input *InputField) (*models.EntityFields, 
 	field := InputField{
 		ID: input.ID,
 	}
-	return s.repository.GetFieldByIdRepository(field)
+	return s.repository.GetFieldByIdRepository(&field)
 }

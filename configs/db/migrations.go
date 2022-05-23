@@ -33,7 +33,7 @@ func AccountsDataMigrator(db *gorm.DB) (*models.EntityUsers, *models.EntityOrgan
 	if errAdmin == "REGISTER_CONFLICT_409" || errAdmin == "REGISTER_FAILED_403" {
 		log.Printf(errAdmin)
 	}
-	newOrganization, errOrgaization := registerService.OrganizationRegisterService(&organization)
+	newOrganization, errOrgaization := registerService.InactiveOrganizationRegisterService(&organization)
 	if errOrgaization == "REGISTER_CONFLICT_409" || errAdmin == "REGISTER_FAILED_403" {
 		log.Printf(errAdmin)
 	}

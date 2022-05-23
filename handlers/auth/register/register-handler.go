@@ -12,7 +12,7 @@ type Handler interface {
 	ActiveUserRegisterHandler(ctx *gin.Context)
 	InactiveUserRegisterHandler(ctx *gin.Context)
 	AdminRegisterHandler(ctx *gin.Context)
-	OrganizationRegisterHandler(ctx *gin.Context)
+	InactiveOrganizationRegisterHandler(ctx *gin.Context)
 	ModeratorRegisterHandler(ctx *gin.Context)
 }
 
@@ -76,8 +76,8 @@ func (h *handler) AdminRegisterHandler(ctx *gin.Context) {
 	ErrUserRegisterHandler(resultRegister, ctx, errRegister)
 }
 
-/* Organization Register Handler */
-func (h *handler) OrganizationRegisterHandler(ctx *gin.Context) {
+/* Inactive Organization Register Handler */
+func (h *handler) InactiveOrganizationRegisterHandler(ctx *gin.Context) {
 
 	var input registerAuthController.InputOrganizationRegister
 	ctx.ShouldBindJSON(&input)
@@ -89,7 +89,7 @@ func (h *handler) OrganizationRegisterHandler(ctx *gin.Context) {
 		return
 	}
 
-	resultRegister, errRegister := h.service.OrganizationRegisterService(&input)
+	resultRegister, errRegister := h.service.InactiveOrganizationRegisterService(&input)
 
 	ErrOrganizationRegisterHandler(resultRegister, ctx, errRegister)
 }
