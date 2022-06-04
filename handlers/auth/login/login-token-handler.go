@@ -9,6 +9,9 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+var roles = map[string]int{"user": 1, "admin": 2, "organization":3, "moderator":4} 
+const secret_key string = "JWT_SECRET"
+
 var config = util.ErrorConfig{
 	Options: []util.ErrorMetaConfig{
 		{
@@ -46,8 +49,8 @@ func UserLoginTokenHandler(ctx *gin.Context, errLogin string, resultLogin *model
 		return
 
 	default:
-		accessTokenData := map[string]interface{}{"id": resultLogin.ID, "email": resultLogin.Email}
-		accessToken, errToken := util.Sign(accessTokenData, "JWT_SECRET", 24*60*1)
+		accessTokenData := map[string]interface{}{"id": resultLogin.ID, "email": resultLogin.Email, "role": roles["user"]}
+		accessToken, errToken := util.Sign(accessTokenData, secret_key, 24*60*1)
 
 		if errToken != nil {
 			defer logrus.Error(errToken.Error())
@@ -64,11 +67,11 @@ func OrganizationLoginTokenHandler(ctx *gin.Context, errLogin string, resultLogi
 	switch errLogin {
 
 	case "LOGIN_NOT_FOUND_404":
-		util.APIResponse(ctx, "User account is not registered", http.StatusNotFound, http.MethodPost, nil)
+		util.APIResponse(ctx, "Organization account is not registered", http.StatusNotFound, http.MethodPost, nil)
 		return
 
 	case "LOGIN_NOT_ACTIVE_403":
-		util.APIResponse(ctx, "User account is not active", http.StatusForbidden, http.MethodPost, nil)
+		util.APIResponse(ctx, "Organization account is not active", http.StatusForbidden, http.MethodPost, nil)
 		return
 
 	case "LOGIN_WRONG_PASSWORD_403":
@@ -76,8 +79,8 @@ func OrganizationLoginTokenHandler(ctx *gin.Context, errLogin string, resultLogi
 		return
 
 	default:
-		accessTokenData := map[string]interface{}{"id": resultLogin.ID, "email": resultLogin.Email}
-		accessToken, errToken := util.Sign(accessTokenData, "JWT_SECRET", 24*60*1)
+		accessTokenData := map[string]interface{}{"id": resultLogin.ID, "email": resultLogin.Email, "role": roles["organization"]}
+		accessToken, errToken := util.Sign(accessTokenData, secret_key, 24*60*1)
 
 		if errToken != nil {
 			defer logrus.Error(errToken.Error())
@@ -89,16 +92,16 @@ func OrganizationLoginTokenHandler(ctx *gin.Context, errLogin string, resultLogi
 	}
 }
 
-/* User Login Token Handler Function */
+/* Moderator Login Token Handler Function */
 func ModeratorLoginTokenHandler(ctx *gin.Context, errLogin string, resultLogin *models.EntityModerators) {
 	switch errLogin {
 
 	case "LOGIN_NOT_FOUND_404":
-		util.APIResponse(ctx, "User account is not registered", http.StatusNotFound, http.MethodPost, nil)
+		util.APIResponse(ctx, "Moderator account is not registered", http.StatusNotFound, http.MethodPost, nil)
 		return
 
 	case "LOGIN_NOT_ACTIVE_403":
-		util.APIResponse(ctx, "User account is not active", http.StatusForbidden, http.MethodPost, nil)
+		util.APIResponse(ctx, "Moderator account is not active", http.StatusForbidden, http.MethodPost, nil)
 		return
 
 	case "LOGIN_WRONG_PASSWORD_403":
@@ -106,8 +109,8 @@ func ModeratorLoginTokenHandler(ctx *gin.Context, errLogin string, resultLogin *
 		return
 
 	default:
-		accessTokenData := map[string]interface{}{"id": resultLogin.ID, "email": resultLogin.Email}
-		accessToken, errToken := util.Sign(accessTokenData, "JWT_SECRET", 24*60*1)
+		accessTokenData := map[string]interface{}{"id": resultLogin.ID, "email": resultLogin.Email, "role": roles["moderator"]}
+		accessToken, errToken := util.Sign(accessTokenData, secret_key, 24*60*1)
 
 		if errToken != nil {
 			defer logrus.Error(errToken.Error())

@@ -3,6 +3,7 @@ package util
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"strings"
 	"time"
 
@@ -16,6 +17,7 @@ type MetaToken struct {
 	Email         string
 	ExpiredAt     time.Time
 	Authorization bool
+	Role int
 }
 
 type AccessToken struct {
@@ -34,6 +36,7 @@ func Sign(Data map[string]interface{}, SecretPublicKeyEnvName string, ExpiredAt 
 
 	for i, v := range Data {
 		claims[i] = v
+		fmt.Println(v)
 	}
 
 	to := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

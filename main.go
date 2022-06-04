@@ -19,11 +19,9 @@ func setupLogOutput() {
 func main() {
 	setupLogOutput()
 	db := db.NewDatabaseConnection()
-	server := gin.New()
+	server := gin.Default()
 
 	server.Use(
-		gin.Recovery(),
-		gin.Logger(),
 		cors.New(cors.Config{
 			AllowOrigins:  []string{"*"},
 			AllowMethods:  []string{"*"},
@@ -33,8 +31,7 @@ func main() {
 		//middlewares.BasicAuth(),
 	)
 
-	server.Static("/css", "./templates/css")
-	server.LoadHTMLGlob("templates/*.html")
+
 	routes.InitAuthRoutes(db, server)
 	routes.InitFieldRoutes(db, server)
 	routes.InitCityRoutes(db, server)

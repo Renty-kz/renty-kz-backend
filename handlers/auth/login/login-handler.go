@@ -36,7 +36,7 @@ func (h *handler) UserLoginHandler(ctx *gin.Context) {
 		return
 	}
 
-	resultLogin, errLogin := h.service.LoginService(&input)
+	resultLogin, errLogin := h.service.UserLoginService(&input)
 
 	UserLoginTokenHandler(ctx, errLogin, resultLogin)
 }
@@ -54,9 +54,9 @@ func (h *handler) OrganizationLoginHandler(ctx *gin.Context) {
 		return
 	}
 
-	resultLogin, errLogin := h.service.LoginService(&input)
+	resultLogin, errLogin := h.service.OrganizationLoginService(&input)
 
-	UserLoginTokenHandler(ctx, errLogin, resultLogin)
+	OrganizationLoginTokenHandler(ctx, errLogin, resultLogin)
 }
 
 /* Moderator Login Handler */
@@ -72,7 +72,7 @@ func (h *handler) ModeratorLoginHandler(ctx *gin.Context) {
 		return
 	}
 
-	resultLogin, errLogin := h.service.LoginService(&input)
+	resultLogin, errLogin := h.service.ModeratorLoginService(&input)
 
-	UserLoginTokenHandler(ctx, errLogin, resultLogin)
+	ModeratorLoginTokenHandler(ctx, errLogin, resultLogin)
 }
