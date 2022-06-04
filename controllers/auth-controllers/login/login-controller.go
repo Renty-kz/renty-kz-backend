@@ -6,6 +6,7 @@ import (
 
 type Service interface {
 	UserLoginService(input *InputLogin) (*model.EntityUsers, string)
+	AdminLoginService(input *InputLogin) (*model.EntityUsers, string)
 	OrganizationLoginService(input *InputLogin) (*model.EntityOrganizations, string)
 	ModeratorLoginService(input *InputLogin) (*model.EntityModerators, string)
 }
@@ -27,6 +28,19 @@ func (s *service) UserLoginService(input *InputLogin) (*model.EntityUsers, strin
 	}
 
 	resultLogin, errLogin := s.repository.UserLoginRepository(&user)
+
+	return resultLogin, errLogin
+}
+
+/* Admin Login Service */
+func (s *service) AdminLoginService(input *InputLogin) (*model.EntityUsers, string) {
+
+	admin := model.EntityUsers{
+		Email:    input.Email,
+		Password: input.Password,
+	}
+
+	resultLogin, errLogin := s.repository.AdminLoginRepository(&admin)
 
 	return resultLogin, errLogin
 }

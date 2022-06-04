@@ -41,6 +41,24 @@ func (h *handler) UserLoginHandler(ctx *gin.Context) {
 	UserLoginTokenHandler(ctx, errLogin, resultLogin)
 }
 
+/* User Login Handler */
+func (h *handler) AdminLoginHandler(ctx *gin.Context) {
+
+	var input loginAuth.InputLogin
+	ctx.ShouldBindJSON(&input)
+
+	errResponse, errCount := util.GoValidator(&input, config.Options)
+
+	if errCount > 0 {
+		util.ValidatorErrorResponse(ctx, http.StatusBadRequest, http.MethodPost, errResponse)
+		return
+	}
+
+	resultLogin, errLogin := h.service.AdminLoginService(&input)
+
+	UserLoginTokenHandler(ctx, errLogin, resultLogin)
+}
+
 /* Organization Login Handler */
 func (h *handler) OrganizationLoginHandler(ctx *gin.Context) {
 

@@ -28,6 +28,7 @@ func Auth(validRole int) gin.HandlerFunc {
 		if ctx.GetHeader("Authorization") == "" {
 			ctx.JSON(http.StatusForbidden, errorResponse)
 			defer ctx.AbortWithStatus(http.StatusForbidden)
+			return
 		}
 
 		token, err := util.VerifyTokenHeader(ctx, "JWT_SECRET")
@@ -42,9 +43,11 @@ func Auth(validRole int) gin.HandlerFunc {
 		if rolesVal.Claims.Role != validRole {
 			ctx.JSON(http.StatusUnauthorized, errorResponse)
 			defer ctx.AbortWithStatus(http.StatusUnauthorized)
+			return
 		} else if err != nil {
 			ctx.JSON(http.StatusUnauthorized, errorResponse)
 			defer ctx.AbortWithStatus(http.StatusUnauthorized)
+			return
 		} else {
 			// global value result
 			ctx.Set("user", token.Claims)

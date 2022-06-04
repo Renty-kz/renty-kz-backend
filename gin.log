@@ -20,4 +20,4 @@
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8080
-[GIN] 2022/06/04 - 16:38:46 | 401 |     4.92275ms |             ::1 | GET      "/api/v1/city"
+[GIN] 2022/06/04 - 17:05:42 | 403 |     1.11025ms |             ::1 | GET      "/api/v1/field"

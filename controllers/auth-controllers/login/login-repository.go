@@ -8,6 +8,7 @@ import (
 
 type Repository interface {
 	UserLoginRepository(input *model.EntityUsers) (*model.EntityUsers, string)
+	AdminLoginRepository(input *model.EntityUsers) (*model.EntityUsers, string)
 	OrganizationLoginRepository(input *model.EntityOrganizations) (*model.EntityOrganizations, string)
 	ModeratorLoginRepository(input *model.EntityModerators) (*model.EntityModerators, string)
 }
@@ -37,9 +38,7 @@ func (r *repository) UserLoginRepository(input *model.EntityUsers) (*model.Entit
 	if checkUserAccount.RowsAffected < 1 {
 		errorCode <- "LOGIN_NOT_FOUND_404"
 		return &users, <-errorCode
-	}
-
-	if !users.Active {
+	} else if !users.Active {
 		errorCode <- "LOGIN_NOT_ACTIVE_403"
 		return &users, <-errorCode
 	}
@@ -54,6 +53,41 @@ func (r *repository) UserLoginRepository(input *model.EntityUsers) (*model.Entit
 	}
 
 	return &users, <-errorCode
+}
+
+/* Admin Login Repository Service */
+func (r *repository) AdminLoginRepository(input *model.EntityUsers) (*model.EntityUsers, string) {
+
+	var admin model.EntityUsers
+	db := r.db.Model(&admin)
+	errorCode := make(chan string, 1)
+
+	admin.Email = input.Email
+	admin.Password = input.Password
+
+	checkUserAccount := db.Debug().Select("*").Where("email = ?", input.Email).Find(&admin)
+
+	if checkUserAccount.RowsAffected < 1 {
+		errorCode <- "LOGIN_NOT_FOUND_404"
+		return &admin, <-errorCode
+	} else if !admin.Active {
+		errorCode <- "LOGIN_NOT_ACTIVE_403"
+		return &admin, <-errorCode
+	} else if !admin.IsAdmin {
+		errorCode <- "LOGIN_NOT_FOUND_404"
+		return &admin, <-errorCode
+	}
+
+	comparePassword := util.ComparePassword(admin.Password, input.Password)
+
+	if comparePassword != nil {
+		errorCode <- "LOGIN_WRONG_PASSWORD_403"
+		return &admin, <-errorCode
+	} else {
+		errorCode <- "nil"
+	}
+
+	return &admin, <-errorCode
 }
 
 /* Organization Login Repository Service */
@@ -71,9 +105,7 @@ func (r *repository) OrganizationLoginRepository(input *model.EntityOrganization
 	if checkOrganizationAccount.RowsAffected < 1 {
 		errorCode <- "LOGIN_NOT_FOUND_404"
 		return &organizations, <-errorCode
-	}
-
-	if !organizations.Active {
+	}else if !organizations.Active {
 		errorCode <- "LOGIN_NOT_ACTIVE_403"
 		return &organizations, <-errorCode
 	}
@@ -105,9 +137,7 @@ func (r *repository) ModeratorLoginRepository(input *model.EntityModerators) (*m
 	if checkModeratorAccount.RowsAffected < 1 {
 		errorCode <- "LOGIN_NOT_FOUND_404"
 		return &moderators, <-errorCode
-	}
-
-	if !moderators.Active {
+	}else if !moderators.Active {
 		errorCode <- "LOGIN_NOT_ACTIVE_403"
 		return &moderators, <-errorCode
 	}
