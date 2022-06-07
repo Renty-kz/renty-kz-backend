@@ -4,20 +4,31 @@
  - using env:	export GIN_MODE=release
  - using code:	gin.SetMode(gin.ReleaseMode)
 
-[GIN-debug] POST   /api/v1/auth/login        --> github.com/KadirbekSharau/rentykz-backend/handlers/auth/login.Handler.UserLoginHandler-fm (4 handlers)
-[GIN-debug] POST   /api/v1/auth/register     --> github.com/KadirbekSharau/rentykz-backend/handlers/auth/register.Handler.ActiveUserRegisterHandler-fm (4 handlers)
+[GIN-debug] POST   /api/v1/auth/user/login   --> github.com/KadirbekSharau/rentykz-backend/handlers/auth/login.Handler.UserLoginHandler-fm (4 handlers)
+[GIN-debug] POST   /api/v1/auth/organization/login --> github.com/KadirbekSharau/rentykz-backend/handlers/auth/login.Handler.OrganizationLoginHandler-fm (4 handlers)
+[GIN-debug] POST   /api/v1/auth/moderator/login --> github.com/KadirbekSharau/rentykz-backend/handlers/auth/login.Handler.ModeratorLoginHandler-fm (4 handlers)
+[GIN-debug] POST   /api/v1/auth/admin/login  --> github.com/KadirbekSharau/rentykz-backend/handlers/auth/login.Handler.AdminLoginHandler-fm (4 handlers)
+[GIN-debug] POST   /api/v1/auth/user/register --> github.com/KadirbekSharau/rentykz-backend/handlers/auth/register.Handler.ActiveUserRegisterHandler-fm (4 handlers)
 [GIN-debug] POST   /api/v1/auth/organization/register --> github.com/KadirbekSharau/rentykz-backend/handlers/auth/register.Handler.InactiveOrganizationRegisterHandler-fm (4 handlers)
 [GIN-debug] POST   /api/v1/auth/moderator/register --> github.com/KadirbekSharau/rentykz-backend/handlers/auth/register.Handler.ModeratorRegisterHandler-fm (4 handlers)
-[GIN-debug] GET    /api/v1/field             --> github.com/KadirbekSharau/rentykz-backend/handlers/field/get-fields.Handler.GetFieldsHandler-fm (5 handlers)
-[GIN-debug] GET    /api/v1/sporttype/:id/fields --> github.com/KadirbekSharau/rentykz-backend/handlers/field/get-fields.Handler.GetFieldsBySportTypeIdHandler-fm (5 handlers)
-[GIN-debug] GET    /api/v1/organization/:id/fields --> github.com/KadirbekSharau/rentykz-backend/handlers/field/get-fields.Handler.GetFieldsByOrganizationIdHandler-fm (5 handlers)
-[GIN-debug] GET    /api/v1/moderator/:id/fields --> github.com/KadirbekSharau/rentykz-backend/handlers/field/get-fields.Handler.GetFieldsByModeratorIdHandler-fm (5 handlers)
-[GIN-debug] GET    /api/v1/city/:id/fields   --> github.com/KadirbekSharau/rentykz-backend/handlers/field/get-fields.Handler.GetFieldsByCityIdHandler-fm (5 handlers)
-[GIN-debug] GET    /api/v1/field/:id         --> github.com/KadirbekSharau/rentykz-backend/handlers/field/get-field.Handler.GetFieldByIdHandler-fm (5 handlers)
-[GIN-debug] POST   /api/v1/field             --> github.com/KadirbekSharau/rentykz-backend/handlers/field/create-field.Handler.CreateFieldHandler-fm (6 handlers)
-[GIN-debug] GET    /api/v1/city              --> github.com/KadirbekSharau/rentykz-backend/handlers/city/get-cities.Handler.GetCitiesHandler-fm (5 handlers)
+[GIN-debug] GET    /api/v1/field             --> github.com/KadirbekSharau/rentykz-backend/handlers/field/get-fields.Handler.GetFieldsHandler-fm (4 handlers)
+[GIN-debug] GET    /api/v1/field/sporttype/:id/fields --> github.com/KadirbekSharau/rentykz-backend/handlers/field/get-fields.Handler.GetFieldsBySportTypeIdHandler-fm (4 handlers)
+[GIN-debug] GET    /api/v1/field/organization/:id/fields --> github.com/KadirbekSharau/rentykz-backend/handlers/field/get-fields.Handler.GetFieldsByOrganizationIdHandler-fm (5 handlers)
+[GIN-debug] GET    /api/v1/field/moderator/:id/fields --> github.com/KadirbekSharau/rentykz-backend/handlers/field/get-fields.Handler.GetFieldsByModeratorIdHandler-fm (5 handlers)
+[GIN-debug] GET    /api/v1/field/city/:id/fields --> github.com/KadirbekSharau/rentykz-backend/handlers/field/get-fields.Handler.GetFieldsByCityIdHandler-fm (4 handlers)
+[GIN-debug] GET    /api/v1/field/:id         --> github.com/KadirbekSharau/rentykz-backend/handlers/field/get-field.Handler.GetFieldByIdHandler-fm (4 handlers)
+[GIN-debug] POST   /api/v1/field             --> github.com/KadirbekSharau/rentykz-backend/handlers/field/create-field.Handler.CreateFieldHandler-fm (4 handlers)
+[GIN-debug] GET    /api/v1/city              --> github.com/KadirbekSharau/rentykz-backend/handlers/city/get-cities.Handler.GetCitiesHandler-fm (4 handlers)
+[GIN-debug] GET    /api/v1/city/:id          --> github.com/KadirbekSharau/rentykz-backend/handlers/city/get-city.Handler.GetCityByIdHandler-fm (4 handlers)
 [GIN-debug] POST   /api/v1/city              --> github.com/KadirbekSharau/rentykz-backend/handlers/city/create-city.Handler.CreateCityHandler-fm (5 handlers)
+[GIN-debug] GET    /api/v1/organization      --> github.com/KadirbekSharau/rentykz-backend/handlers/organization/get-organizations.Handler.GetAllOrganizationsHandler-fm (5 handlers)
+[GIN-debug] GET    /api/v1/organization/active --> github.com/KadirbekSharau/rentykz-backend/handlers/organization/get-organizations.Handler.GetActiveOrganizationsHandler-fm (5 handlers)
+[GIN-debug] GET    /api/v1/organization/inactive --> github.com/KadirbekSharau/rentykz-backend/handlers/organization/get-organizations.Handler.GetInactiveOrganizationsHandler-fm (5 handlers)
+[GIN-debug] PUT    /api/v1/organization/:id/activate --> github.com/KadirbekSharau/rentykz-backend/handlers/organization/update-organization.Handler.ActivateOrganizationHandler-fm (5 handlers)
+[GIN-debug] PUT    /api/v1/organization/:id/inactivate --> github.com/KadirbekSharau/rentykz-backend/handlers/organization/update-organization.Handler.InactivateOrganizationHandler-fm (5 handlers)
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8080
-[GIN] 2022/06/04 - 17:05:42 | 403 |     1.11025ms |             ::1 | GET      "/api/v1/field"
+[GIN] 2022/06/07 - 21:33:57 | 404 |         3.5µs |             ::1 | GET      "/api/v1/organization/4/inactivate"
+[GIN] 2022/06/07 - 21:34:01 | 201 |   14.540833ms |             ::1 | PUT      "/api/v1/organization/4/inactivate"
+[GIN] 2022/06/07 - 21:34:13 | 200 |    1.509792ms |             ::1 | GET      "/api/v1/organization/inactive"

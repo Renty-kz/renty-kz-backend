@@ -3,7 +3,7 @@ package createCityHandler
 import (
 	"net/http"
 
-	createCityController "github.com/KadirbekSharau/rentykz-backend/controllers/city-controllers/create-city"
+	createCityController "github.com/KadirbekSharau/rentykz-backend/controllers/city/create-city"
 	"github.com/KadirbekSharau/rentykz-backend/util"
 	"github.com/gin-gonic/gin"
 )

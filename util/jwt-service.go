@@ -3,7 +3,7 @@ package util
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
+
 	"strings"
 	"time"
 
@@ -36,7 +36,6 @@ func Sign(Data map[string]interface{}, SecretPublicKeyEnvName string, ExpiredAt 
 
 	for i, v := range Data {
 		claims[i] = v
-		fmt.Println(v)
 	}
 
 	to := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

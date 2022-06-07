@@ -3,8 +3,6 @@ package main
 import (
 	"io"
 	"os"
-	//"time"
-
 	"github.com/KadirbekSharau/rentykz-backend/configs/db"
 	"github.com/KadirbekSharau/rentykz-backend/routes"
 	"github.com/gin-contrib/cors"
@@ -28,13 +26,13 @@ func main() {
 			AllowHeaders:  []string{"*"},
 			AllowWildcard: true,
 		}),
-		//middlewares.BasicAuth(),
 	)
 
 
 	routes.InitAuthRoutes(db, server)
 	routes.InitFieldRoutes(db, server)
 	routes.InitCityRoutes(db, server)
+	routes.InitOrganizationRoutes(db, server)
 
 	server.Run(":8080")
 }

@@ -3,7 +3,7 @@ package getFieldHandler
 import (
 	"net/http"
 
-	getFieldController "github.com/KadirbekSharau/rentykz-backend/controllers/field-controllers/get-field"
+	getFieldController "github.com/KadirbekSharau/rentykz-backend/controllers/field/get-field"
 	"github.com/KadirbekSharau/rentykz-backend/util"
 	"github.com/gin-gonic/gin"
 )
@@ -47,10 +47,10 @@ func (h *handler) GetFieldByIdHandler(ctx *gin.Context) {
 	switch errResultField {
 
 	case "RESULT_STUDENT_NOT_FOUND_404":
-		util.APIResponse(ctx, "Student data is not exist or deleted", http.StatusNotFound, http.MethodGet, nil)
+		util.APIResponse(ctx, "Field data is not exist or deleted", http.StatusNotFound, http.MethodGet, nil)
 		return
 
 	default:
-		util.APIResponse(ctx, "Result Student data successfully", http.StatusOK, http.MethodGet, resultField)
+		util.APIResponse(ctx, "Result Field data successfully", http.StatusOK, http.MethodGet, resultField)
 	}
 }

@@ -3,9 +3,9 @@ package db
 import (
 	"log"
 
-	registerAuthController "github.com/KadirbekSharau/rentykz-backend/controllers/auth-controllers/register"
-	createCityController "github.com/KadirbekSharau/rentykz-backend/controllers/city-controllers/create-city"
-	createSportTypeController "github.com/KadirbekSharau/rentykz-backend/controllers/sport-type-controllers/create-sport-type"
+	registerAuthController "github.com/KadirbekSharau/rentykz-backend/controllers/auth/register"
+	createCityController "github.com/KadirbekSharau/rentykz-backend/controllers/city/create-city"
+	createSportTypeController "github.com/KadirbekSharau/rentykz-backend/controllers/sport-type/create-sport-type"
 	"github.com/KadirbekSharau/rentykz-backend/models"
 	"gorm.io/gorm"
 )

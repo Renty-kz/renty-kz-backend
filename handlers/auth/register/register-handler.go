@@ -3,7 +3,7 @@ package registerHandler
 import (
 	"net/http"
 
-	"github.com/KadirbekSharau/rentykz-backend/controllers/auth-controllers/register"
+	"github.com/KadirbekSharau/rentykz-backend/controllers/auth/register"
 	"github.com/KadirbekSharau/rentykz-backend/util"
 	"github.com/gin-gonic/gin"
 )

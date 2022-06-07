@@ -1,8 +1,8 @@
 package routes
 
 import (
-	loginAuthController "github.com/KadirbekSharau/rentykz-backend/controllers/auth-controllers/login"
-	registerAuthController "github.com/KadirbekSharau/rentykz-backend/controllers/auth-controllers/register"
+	loginAuthController "github.com/KadirbekSharau/rentykz-backend/controllers/auth/login"
+	registerAuthController "github.com/KadirbekSharau/rentykz-backend/controllers/auth/register"
 	LoginHandler "github.com/KadirbekSharau/rentykz-backend/handlers/auth/login"
 	registerHandler "github.com/KadirbekSharau/rentykz-backend/handlers/auth/register"
 	"github.com/gin-gonic/gin"
@@ -22,8 +22,11 @@ func InitAuthRoutes(db *gorm.DB, route *gin.Engine) {
 	)
 
 	groupRoute := route.Group("/api/v1/auth")
-	groupRoute.POST("/login", loginHandler.UserLoginHandler)
-	groupRoute.POST("/register", registerHandler.ActiveUserRegisterHandler)
+	groupRoute.POST("/user/login", loginHandler.UserLoginHandler)
+	groupRoute.POST("/organization/login", loginHandler.OrganizationLoginHandler)
+	groupRoute.POST("/moderator/login", loginHandler.ModeratorLoginHandler)
+	groupRoute.POST("/admin/login", loginHandler.AdminLoginHandler)
+	groupRoute.POST("/user/register", registerHandler.ActiveUserRegisterHandler)
 	groupRoute.POST("/organization/register", registerHandler.InactiveOrganizationRegisterHandler)
 	groupRoute.POST("/moderator/register", registerHandler.ModeratorRegisterHandler)
 }

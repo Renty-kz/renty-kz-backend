@@ -41,10 +41,12 @@ func Auth(validRole int) gin.HandlerFunc {
 		rolesVal := util.DecodeToken(token)
 
 		if rolesVal.Claims.Role != validRole {
+			errorResponse.Message = "accessToken and Role invalid or expired"
 			ctx.JSON(http.StatusUnauthorized, errorResponse)
 			defer ctx.AbortWithStatus(http.StatusUnauthorized)
 			return
-		} else if err != nil {
+		}
+		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, errorResponse)
 			defer ctx.AbortWithStatus(http.StatusUnauthorized)
 			return

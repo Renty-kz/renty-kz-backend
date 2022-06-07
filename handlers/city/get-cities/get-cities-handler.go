@@ -3,7 +3,7 @@ package getCitiesHandler
 import (
 	"net/http"
 
-	"github.com/KadirbekSharau/rentykz-backend/controllers/city-controllers/get-cities"
+	"github.com/KadirbekSharau/rentykz-backend/controllers/city/get-cities"
 	"github.com/KadirbekSharau/rentykz-backend/util"
 	"github.com/gin-gonic/gin"
 )

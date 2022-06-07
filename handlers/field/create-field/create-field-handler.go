@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	createField "github.com/KadirbekSharau/rentykz-backend/controllers/field-controllers/create-field"
+	createField "github.com/KadirbekSharau/rentykz-backend/controllers/field/create-field"
 	util "github.com/KadirbekSharau/rentykz-backend/util"
 )
 

@@ -5,7 +5,7 @@ import (
 
 	util "github.com/KadirbekSharau/rentykz-backend/util"
 	"github.com/gin-gonic/gin"
-	loginAuth "github.com/KadirbekSharau/rentykz-backend/controllers/auth-controllers/login"
+	loginAuth "github.com/KadirbekSharau/rentykz-backend/controllers/auth/login"
 
 )
 
@@ -13,6 +13,7 @@ type Handler interface {
 	UserLoginHandler(ctx *gin.Context)
 	OrganizationLoginHandler(ctx *gin.Context)
 	ModeratorLoginHandler(ctx *gin.Context)
+	AdminLoginHandler(ctx *gin.Context)
 }
 
 type handler struct {
@@ -41,7 +42,7 @@ func (h *handler) UserLoginHandler(ctx *gin.Context) {
 	UserLoginTokenHandler(ctx, errLogin, resultLogin)
 }
 
-/* User Login Handler */
+/* Admin Login Handler */
 func (h *handler) AdminLoginHandler(ctx *gin.Context) {
 
 	var input loginAuth.InputLogin
@@ -56,7 +57,7 @@ func (h *handler) AdminLoginHandler(ctx *gin.Context) {
 
 	resultLogin, errLogin := h.service.AdminLoginService(&input)
 
-	UserLoginTokenHandler(ctx, errLogin, resultLogin)
+	AdminLoginTokenHandler(ctx, errLogin, resultLogin)
 }
 
 /* Organization Login Handler */
