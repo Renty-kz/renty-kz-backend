@@ -33,10 +33,10 @@ func ErrFieldsByCityIdHandler(fields *[]models.EntityFields, ctx *gin.Context, e
 	switch err {
 
 	case "RESULTS_FIELD_NOT_FOUND_404":
-		util.APIResponse(ctx, "Fields in this city do not exist", http.StatusConflict, http.MethodPost, nil)
+		util.APIResponse(ctx, "Fields in this city do not exist", http.StatusNotFound, http.MethodGet, nil)
 
 	default:
-		util.APIResponse(ctx, "Results Fields data successfully", http.StatusOK, http.MethodPost, fields)
+		util.APIResponse(ctx, "Results Fields data successfully", http.StatusOK, http.MethodGet, fields)
 	}
 }
 

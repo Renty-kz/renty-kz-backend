@@ -27,9 +27,9 @@ func (h *handler) GetCitiesHandler(ctx *gin.Context) {
 	switch err {
 
 	case "RESULTS_CITY_NOT_FOUND_404":
-		util.APIResponse(ctx, "Cities data is not exists", http.StatusConflict, http.MethodPost, nil)
+		util.APIResponse(ctx, "Cities data is not exists", http.StatusNotFound, http.MethodGet, nil)
 
 	default:
-		util.APIResponse(ctx, "Results Cities data successfully", http.StatusOK, http.MethodPost, fields)
+		util.APIResponse(ctx, "Results Cities data successfully", http.StatusOK, http.MethodGet, fields)
 	}
 }
